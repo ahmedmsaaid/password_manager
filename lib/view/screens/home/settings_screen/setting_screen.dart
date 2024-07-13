@@ -1,0 +1,107 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:password_manager/core/widgets/navigator.dart';
+
+import '../../../../core/widgets/selection.dart';
+import '../../../../translation/locate_keys.g.dart';
+import '../profile/profile_screen.dart';
+
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(
+          Icons.person_outline_outlined,
+          color: Colors.black,
+        ),
+        centerTitle: true,
+        title: Text(LocaleKeys.setting.tr()),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.add,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+      body: ListView(
+          children: [
+        Selection(
+          text: LocaleKeys.profile.tr(),
+          widget: IconButton(
+              onPressed: () {
+                Navigation.push(context, ProfileScreen());
+              },
+              icon: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 30.sp,
+              ),),
+
+        ),
+            Selection(
+              text: LocaleKeys.permissions.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 30.sp,
+                ),),
+
+            ),
+            Selection(
+              text: LocaleKeys.sync.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Switch(value: true,onChanged: (value){
+                  value=value;
+                },),),
+
+            ),
+            Selection(
+              text: LocaleKeys.autofill.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Switch(value: false,onChanged: (value){
+                  value=value;
+                },),),
+
+            ),
+            Selection(
+              text: LocaleKeys.about.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 30.sp,
+                ),),
+
+            ),
+            Selection(
+              text: LocaleKeys.help.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.keyboard_arrow_right_outlined,
+                  size: 30.sp,
+                ),),
+
+            ),
+            Selection(
+              text: LocaleKeys.version.tr(),
+              widget: IconButton(
+                onPressed: () {},
+                icon: Text('1.0.0'),),
+
+            ),
+      ],),
+    );
+  }
+}
