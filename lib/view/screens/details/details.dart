@@ -3,8 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/widgets/selection.dart';
-import '../../../translation/locate_keys.g.dart';
+import '../../../../core/widgets/selection.dart';
+import '../../../../translation/locate_keys.g.dart';
+
 
 class Details extends StatelessWidget {
   const Details({super.key});
@@ -166,7 +167,8 @@ class Details extends StatelessWidget {
                 ),
                 onPressed: () {},
                 child: Text(LocaleKeys.copyPassword.tr(),style: TextStyle(color: Colors.black87,fontSize: 12.sp,fontWeight: FontWeight.normal),),
-              ), ElevatedButton(
+              ),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.sp),side: BorderSide(
                       color: Colors.black.withOpacity(.2)
