@@ -73,5 +73,9 @@ abstract class  LocaleKeys {
   static const userIdFailed = 'userIdFailed';
   static const nameFailedError = 'nameFailedError';
   static const userIdFailedError = 'userIdFailedError';
+  static const homeIcon = 'homeIcon';
+  static const searchIcon = 'searchIcon';
+  static const analysisIcon = 'analysisIcon';
+  static const settingIcon = 'settingIcon';
 
 }

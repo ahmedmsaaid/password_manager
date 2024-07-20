@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:password_manager/view/view_model/auth_cubit.dart';
 
 import '../../../core/widgets/navigator.dart';
 import '../../../core/widgets/widgets.dart';
 import '../../../translation/locate_keys.g.dart';
+import '../../view_model/cubits/auth/auth_cubit.dart';
 import 'verification_screen.dart';
 
 class LoginRegister extends StatelessWidget {

@@ -1,18 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:password_manager/view/screens/add/new_record.dart';
-import 'package:password_manager/view/screens/home/profile/profile_screen.dart';
-
 import '../../../../core/widgets/navigator.dart';
 import '../../../../core/widgets/selection.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../../../translation/locate_keys.g.dart';
 import '../../details/details.dart';
-import '../settings_screen/setting_screen.dart';
+import '../../profile/profile_screen.dart';
+
+
 
 class Analysis extends StatelessWidget {
   const Analysis({super.key});
@@ -21,19 +18,21 @@ class Analysis extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.person_outline_outlined,
-          color: Colors.black,
+        leading: IconButton(
+            onPressed: (){
+              Navigation.push(context, ProfileScreen());
+            },
+            icon:Icon(Icons.person_outline,
+              color: Colors.black,)
         ),
         centerTitle: true,
-        title: Text(LocaleKeys.security.tr()),
+        title: Text(LocaleKeys.analysis.tr()),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: (){Navigation.push(context, NewRecord());},
-              icon:Icon(Icons.add,
-                size: 30,),
+              icon: Icon(Icons.add),
             ),
           ),
         ],

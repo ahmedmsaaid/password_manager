@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 
-import '../../view_model/auth_cubit.dart';
+ import '../../view_model/cubits/auth/auth_cubit.dart';
 import '../Login_register/Login_register.dart';
 
 class OnboardTow extends StatelessWidget {

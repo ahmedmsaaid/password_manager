@@ -70,7 +70,11 @@
   "nameFailed": "website or app name",
   "userIdFailed": "username or email id",
   "nameFailedError": "Enter website or app name",
-  "userIdFailedError": "Enter username or email id"
+  "userIdFailedError": "Enter username or email id",
+  "homeIcon": "HOME",
+  "searchIcon": "SEARCH",
+  "analysisIcon":"ANALYSIS",
+  "settingIcon": "SETTING"
 
 
 

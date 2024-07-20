@@ -5,7 +5,9 @@ import 'package:password_manager/core/widgets/navigator.dart';
 
 import '../../../../core/widgets/selection.dart';
 import '../../../../translation/locate_keys.g.dart';
-import '../analysis/analysis.dart';
+
+import '../add/new_record.dart';
+import '../home/analysis/analysis.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,17 +16,26 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.person_outline,
-          color: Colors.black,
+        leading: IconButton(
+            onPressed: (){
+               Navigator.pop(context);
+            },
+            icon:Row(
+              children: [
+                Icon(Icons.arrow_back,
+                  color: Colors.black,),
+                 
+              ],
+            )
         ),
         centerTitle: true,
         title: Text(LocaleKeys.profile.tr()),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.add,
+            child: IconButton(
+              onPressed: (){Navigation.push(context, NewRecord());},
+              icon: Icon(Icons.add),
             ),
           ),
         ],

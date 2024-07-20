@@ -6,8 +6,10 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 import 'package:password_manager/view/screens/home/settings_screen/setting_screen.dart';
+import 'package:password_manager/view/screens/profile/profile_screen.dart';
 
 import '../../add/new_record.dart';
+import '../search/search.dart';
 
 class Passwords extends StatelessWidget {
   const Passwords({super.key});
@@ -16,9 +18,12 @@ class Passwords extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(
-          Icons.person_outline,
-          color: Colors.black,
+        leading: IconButton(
+          onPressed: (){
+            Navigation.push(context, ProfileScreen());
+          },
+          icon:Icon(Icons.person_outline,
+          color: Colors.black,)
         ),
         centerTitle: true,
         title: Text(LocaleKeys.passwords.tr()),

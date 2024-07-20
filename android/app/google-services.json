@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623990508527",
+    "project_id": "password-manager-bab88",
+    "storage_bucket": "password-manager-bab88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623990508527:android:6e83d43fae61fd8718041a",
+        "android_client_info": {
+          "package_name": "com.passwordmanager.password_manager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgyHHpDMJ21UG-OsOfdvZaEw9bbtckjyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

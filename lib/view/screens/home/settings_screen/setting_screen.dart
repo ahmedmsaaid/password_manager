@@ -7,7 +7,9 @@ import 'package:password_manager/core/widgets/navigator.dart';
 
 import '../../../../core/widgets/selection.dart';
 import '../../../../translation/locate_keys.g.dart';
-import '../profile/profile_screen.dart';
+import '../../add/new_record.dart';
+import '../../profile/profile_screen.dart';
+
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -15,19 +17,22 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.person_outline_outlined,
-          color: Colors.black,
+      appBar:AppBar(
+        leading: IconButton(
+            onPressed: (){
+              Navigation.push(context, ProfileScreen());
+            },
+            icon:Icon(Icons.person_outline,
+              color: Colors.black,)
         ),
         centerTitle: true,
         title: Text(LocaleKeys.setting.tr()),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.add,
-              size: 30,
+            child: IconButton(
+              onPressed: (){Navigation.push(context, NewRecord());},
+              icon: Icon(Icons.add),
             ),
           ),
         ],

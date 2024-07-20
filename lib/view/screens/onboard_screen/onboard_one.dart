@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 import 'package:password_manager/view/screens/onboard_screen/onboard_screen.dart';
 import 'package:password_manager/view/screens/onboard_screen/onboard_tow.dart';
-import 'package:password_manager/view/view_model/auth_cubit.dart';
 
 import '../../../core/widgets/navigator.dart';
+import '../../view_model/cubits/auth/auth_cubit.dart';
 import '../Login_register/Login_register.dart';
 
 class OnboardOne extends StatelessWidget {

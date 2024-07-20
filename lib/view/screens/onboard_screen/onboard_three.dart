@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
-import 'package:password_manager/view/view_model/auth_cubit.dart';
 
 import '../../../core/widgets/navigator.dart';
+import '../../view_model/cubits/auth/auth_cubit.dart';
 import '../Login_register/Login_register.dart';
 
 class OnboardThree extends StatelessWidget {

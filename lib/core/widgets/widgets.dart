@@ -7,7 +7,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 
 import '../../translation/locate_keys.g.dart';
-import '../../view/view_model/auth_cubit.dart';
 
 class Widgets{
   static TextFormField passwordFormField(BuildContext context, String err,bool isVisible,TextEditingController controller,String labelText,void Function()? onTap){

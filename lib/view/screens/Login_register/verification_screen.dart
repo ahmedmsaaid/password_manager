@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 
 import '../../../translation/locate_keys.g.dart';
+import '../home/home/home_screen.dart';
 import '../home/passwords/passwords.dart';
 
 class VerificationScreen extends StatelessWidget {
@@ -14,76 +15,78 @@ class VerificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 30.h,
-            ),
-            Image.asset(
-              'assets/icons/logo.png',
-              height: 80.h,
-            ),
-            Text(
-              LocaleKeys.appName.tr(),
-              style:
-              TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
-            ),
-            Text(
-              LocaleKeys.title.tr(),
-              style: TextStyle(fontSize: 16.sp),
-            ),
-            SizedBox(
-              height: 30.h,
-            ),
-            Container(
-              width: 280.w,
-              height: 100.h,
-      
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.sp),
-                border:   Border.all(
-                  color: Colors.black,
-      
+        child: ListView(
+          children: [Column(
+            children: [
+              SizedBox(
+                height: 30.h,
+              ),
+              Image.asset(
+                'assets/icons/logo.png',
+                height: 80.h,
+              ),
+              Text(
+                LocaleKeys.appName.tr(),
+                style:
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 30.sp),
+              ),
+              Text(
+                LocaleKeys.title.tr(),
+                style: TextStyle(fontSize: 16.sp),
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+              Container(
+                width: 280.w,
+                height: 100.h,
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.sp),
+                  border:   Border.all(
+                    color: Colors.black,
+
+                  ),
+
                 ),
-      
-              ),
-              child: Column(
-                children: [
-                  SizedBox(height: 6.h,),
-                  Text(LocaleKeys.enterVerificationCode.tr(),style: TextStyle(fontSize: 18.sp),),
-                  OtpTextField(keyboardType: TextInputType.number,
-      
-                    fillColor: Colors.black,
-                    focusedBorderColor: Colors.green,
-                    enabledBorderColor: Colors.black,
-                    cursorColor: Colors.green,
-      
-      
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder()
-                    ),),
+                child: Column(
+                  children: [
+                    SizedBox(height: 6.h,),
+                    Text(LocaleKeys.enterVerificationCode.tr(),style: TextStyle(fontSize: 18.sp),),
+                    OtpTextField(keyboardType: TextInputType.number,
 
-                ],
-              ),
-            ),
-            SizedBox(height: 300.h,),
-            ElevatedButton(
-              onPressed: () {
-                Navigation.push(context, Passwords());
+                      fillColor: Colors.black,
+                      focusedBorderColor: Colors.green,
+                      enabledBorderColor: Colors.black,
+                      cursorColor: Colors.green,
 
-              },
-              child: Text(
-                LocaleKeys.go.tr(),
-                style: TextStyle(color: Colors.white, fontSize: 15.sp),
+
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder()
+                      ),),
+
+                  ],
+                ),
               ),
-              style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadiusDirectional.circular(12.r)),
-                  side: BorderSide(color: Colors.black),
-                  backgroundColor: Colors.black),
-            ),
-          ],
+              SizedBox(height: 300.h,),
+              ElevatedButton(
+                onPressed: () {
+                  Navigation.push(context, HomeScreen());
+
+                },
+                child: Text(
+                  LocaleKeys.go.tr(),
+                  style: TextStyle(color: Colors.white, fontSize: 15.sp),
+                ),
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadiusDirectional.circular(12.r)),
+                    side: BorderSide(color: Colors.black),
+                    backgroundColor: Colors.black),
+              ),
+            ],
+          ),]
         ),
       ),
     );

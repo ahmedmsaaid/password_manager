@@ -70,7 +70,11 @@
   "nameFailed": "اسم الموقع أو التطبيق",
   "userIdFailed": "اسم المستخدم أو معرف البريد الإلكتروني",
   "nameFailedError": "ادخل اسم الموقع او التطبيق",
-  "userIdFailedError": "ادخل الاسم او البريد الالكتروني"
+  "userIdFailedError": "ادخل الاسم او البريد الالكتروني",
+  "homeIcon": "الصفحة الرئيسيه",
+  "searchIcon": "بحث",
+  "analysisIcon":"تحليل",
+  "settingIcon": "الاعدادات"
 
 
 
