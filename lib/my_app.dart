@@ -8,7 +8,7 @@ import 'view/screens/splash/splash_screen.dart';
 import 'view/view_model/cubits/auth/auth_cubit.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key,required this.appRoutes});
+  const MyApp({super.key, required this.appRoutes});
   final AppRoutes appRoutes;
 
   @override
@@ -20,24 +20,22 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => AuthCubit(),
-
+            BlocProvider(
+              create: (context) => AuthCubit(),
             ),
-              BlocProvider(create: (context) => HomeCubit()),
+            BlocProvider(create: (context) => HomeCubit()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
-          
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             home: child,
             onGenerateRoute: appRoutes.generateRoute,
-          
-          
           ),
         );
       },
-      child: SplashScreen(),);
+      child: SplashScreen(),
+    );
   }
 }

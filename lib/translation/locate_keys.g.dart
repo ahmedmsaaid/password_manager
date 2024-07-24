@@ -77,5 +77,6 @@ abstract class  LocaleKeys {
   static const searchIcon = 'searchIcon';
   static const analysisIcon = 'analysisIcon';
   static const settingIcon = 'settingIcon';
+  static const wrongOtp = 'wrongOtp';
 
 }

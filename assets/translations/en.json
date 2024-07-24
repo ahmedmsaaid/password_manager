@@ -74,7 +74,8 @@
   "homeIcon": "HOME",
   "searchIcon": "SEARCH",
   "analysisIcon":"ANALYSIS",
-  "settingIcon": "SETTING"
+  "settingIcon": "SETTING",
+  "wrongOtp":"Invalid OTP Code"
 
 
 

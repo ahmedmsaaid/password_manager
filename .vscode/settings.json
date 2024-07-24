@@ -1,3 +1,5 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "notebook.defaultFormatter": "Dart-Code.flutter"
 }

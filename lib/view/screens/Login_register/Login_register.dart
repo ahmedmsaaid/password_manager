@@ -17,7 +17,9 @@ class LoginRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is CodeSent) {
+          Navigation.push(context, VerificationScreen());
+        }
       },
       builder: (context, state) {
         var cubit = AuthCubit.get(context);
@@ -48,8 +50,8 @@ class LoginRegister extends StatelessWidget {
                     height: 30.h,
                   ),
                   Container(
-                    width: 300,
-                    height: 400,
+                    width: 300.w,
+                    height: 400.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all()),
@@ -66,22 +68,27 @@ class LoginRegister extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   child: SizedBox(
-                                      height: 50,
+                                      height: 50.h,
                                       child: ElevatedButton(
                                         onPressed: () {
                                           cubit.enableRegister();
                                           cubit.clearControllers();
-                                          },
+                                        },
                                         child: Text(
                                           LocaleKeys.register.tr(),
-                                          style: TextStyle(color:!cubit.isLogin? Colors.white:Colors.black),
+                                          style: TextStyle(
+                                              color: !cubit.isLogin
+                                                  ? Colors.white
+                                                  : Colors.black),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadiusDirectional
                                                         .circular(12.r)),
-                                            backgroundColor:!cubit.isLogin? Colors.black:Colors.white),
+                                            backgroundColor: !cubit.isLogin
+                                                ? Colors.black
+                                                : Colors.white),
                                       )),
                                 ),
                               ),
@@ -91,15 +98,18 @@ class LoginRegister extends StatelessWidget {
                               Expanded(
                                 child: Container(
                                   child: SizedBox(
-                                      height: 50,
+                                      height: 50.h,
                                       child: ElevatedButton(
                                         onPressed: () {
                                           cubit.enableLogin();
                                           cubit.clearControllers();
-                                          },
+                                        },
                                         child: Text(
                                           LocaleKeys.login.tr(),
-                                          style: TextStyle(color:cubit.isLogin? Colors.white:Colors.black),
+                                          style: TextStyle(
+                                              color: cubit.isLogin
+                                                  ? Colors.white
+                                                  : Colors.black),
                                         ),
                                         style: ElevatedButton.styleFrom(
                                             shape: RoundedRectangleBorder(
@@ -108,7 +118,9 @@ class LoginRegister extends StatelessWidget {
                                                         .circular(12.r)),
                                             side:
                                                 BorderSide(color: Colors.black),
-                                            backgroundColor: cubit.isLogin? Colors.black:Colors.white),
+                                            backgroundColor: cubit.isLogin
+                                                ? Colors.black
+                                                : Colors.white),
                                       )),
                                 ),
                               ),
@@ -129,45 +141,46 @@ class LoginRegister extends StatelessWidget {
                                     )),
                               ),
                               Widgets.textFormField(
-                                  context,
-                                  LocaleKeys.mobileNoError.tr(),
-                                  cubit.mobileController,
-                                  LocaleKeys.mobileNo.tr(),
+                                context,
+                                LocaleKeys.mobileNoError.tr(),
+                                cubit.mobileController,
+                                LocaleKeys.mobileNo.tr(),
                               ),
-
                             ],
                           ),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(15.0.sp),
-                                child: Align(
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Text(
-                                      LocaleKeys.personalDetails.tr(),
-                                      style: TextStyle(fontSize: 18.sp),
-                                    )),
-                              ),
-                              Widgets.textFormField(
-                                  context,
-                                  LocaleKeys.firsNameError.tr(),
-                                  cubit.firstNameController,
-                                  LocaleKeys.firstName.tr()),
-                              Widgets.textFormField(
-                                  context,
-                                  LocaleKeys.lastNameError.tr(),
-                                  cubit.lastNameController,
-                                  LocaleKeys.lastName.tr()),
-                              Widgets.textFormField(
-                                  context,
-                                  LocaleKeys.mobileNoError.tr(),
-                                  cubit.mobileController,
-                                  LocaleKeys.mobileNo.tr()),
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(15.0.sp),
+                                  child: Align(
+                                      alignment: AlignmentDirectional.topStart,
+                                      child: Text(
+                                        LocaleKeys.personalDetails.tr(),
+                                        style: TextStyle(fontSize: 18.sp),
+                                      )),
+                                ),
+                                Widgets.textFormField(
+                                    context,
+                                    LocaleKeys.firsNameError.tr(),
+                                    cubit.firstNameController,
+                                    LocaleKeys.firstName.tr()),
+                                Widgets.textFormField(
+                                    context,
+                                    LocaleKeys.lastNameError.tr(),
+                                    cubit.lastNameController,
+                                    LocaleKeys.lastName.tr()),
+                                Widgets.textFormField(
+                                    context,
+                                    LocaleKeys.mobileNoError.tr(),
+                                    cubit.mobileController,
+                                    LocaleKeys.mobileNo.tr()),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
                         ),
                       ],
                     ),
@@ -181,28 +194,27 @@ class LoginRegister extends StatelessWidget {
                     child: Visibility(
                       visible: cubit.fullData(),
                       replacement: ElevatedButton(
-                        onPressed: () {
-
-
-                        },
+                        onPressed: () {},
                         child: Text(
                           LocaleKeys.getVerificationCode.tr(),
-                          style: TextStyle(color: Colors.black, fontSize: 15.sp),
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 15.sp),
                         ),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadiusDirectional.circular(12.r)),
+                                    BorderRadiusDirectional.circular(12.r)),
                             side: BorderSide(color: Colors.black),
                             backgroundColor: Colors.white),
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigation.push(context, VerificationScreen());
+                          cubit.phonAuth(cubit.mobileController.text);
                         },
                         child: Text(
                           LocaleKeys.getVerificationCode.tr(),
-                          style: TextStyle(color: Colors.white, fontSize: 15.sp),
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 15.sp),
                         ),
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(

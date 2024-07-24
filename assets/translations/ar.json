@@ -74,7 +74,8 @@
   "homeIcon": "الصفحة الرئيسيه",
   "searchIcon": "بحث",
   "analysisIcon":"تحليل",
-  "settingIcon": "الاعدادات"
+  "settingIcon": "الاعدادات",
+   "wrongOtp":"رمز OTP غير صالح"
 
 
 

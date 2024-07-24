@@ -43,6 +43,7 @@ dependencies:
   password_strength_checker: ^1.2.3
   password_generate: ^0.0.3
   firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
 
 dev_dependencies:
   flutter_test:
