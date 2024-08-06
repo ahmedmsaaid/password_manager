@@ -59,7 +59,7 @@
   "length": "Length",
   "numbers": "Numbers",
   "symbols": "Symbols",
-  "lowercase": "Lowercase",
+  "lowercase": "letters",
   "uppercase": "Uppercase",
   "regenerate": "Regenerate",
   "savePassword": "Save password",
@@ -76,6 +76,7 @@
   "analysisIcon":"ANALYSIS",
   "settingIcon": "SETTING",
   "wrongOtp":"Invalid OTP Code"
+ 
 
 
 

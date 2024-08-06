@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/widgets/navigator.dart';
@@ -51,7 +50,7 @@ class LoginRegister extends StatelessWidget {
                   ),
                   Container(
                     width: 300.w,
-                    height: 400.h,
+                    height: 350.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all()),
@@ -148,8 +147,8 @@ class LoginRegister extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: SingleChildScrollView(
-                            child: Column(
+                          child: Expanded(
+                            child: ListView(
                               children: [
                                 Padding(
                                   padding: EdgeInsets.all(15.0.sp),

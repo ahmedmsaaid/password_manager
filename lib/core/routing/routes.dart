@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 class Routs{
 static const String homeScreen='/homeScreen';
 static const String onBoardingScreen = '/onBoardScreen';

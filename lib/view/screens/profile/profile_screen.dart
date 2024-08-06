@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
+import 'package:password_manager/view/screens/onboard_screen/onboard_screen.dart';
+import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 
 import '../../../../core/widgets/selection.dart';
 import '../../../../translation/locate_keys.g.dart';
@@ -17,24 +20,26 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
-               Navigator.pop(context);
+            onPressed: () {
+              Navigator.pop(context);
             },
-            icon:Row(
+            icon: Row(
               children: [
-                Icon(Icons.arrow_back,
-                  color: Colors.black,),
-                 
+                Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
               ],
-            )
-        ),
+            )),
         centerTitle: true,
         title: Text(LocaleKeys.profile.tr()),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              onPressed: (){Navigation.push(context, NewRecord());},
+              onPressed: () {
+                Navigation.push(context, NewRecord());
+              },
               icon: Icon(Icons.add),
             ),
           ),
@@ -73,7 +78,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Navigation.push(context,Analysis() );
+                      Navigation.push(context, Analysis());
                     },
                     child: Text(
                       'Edit profile',
@@ -98,14 +103,33 @@ class ProfileScreen extends StatelessWidget {
               onChanged: (value) {},
             ),
           ),
-          Selection(text: LocaleKeys.security.tr(),widget: Icon(Icons.arrow_forward_ios),),
-          Selection(text: LocaleKeys.trustedDevices.tr(),widget: Icon(Icons.arrow_forward_ios),),
-          Selection(text: LocaleKeys.backup.tr(),widget: Icon(Icons.arrow_forward_ios),),
-
+          Selection(
+            text: LocaleKeys.security.tr(),
+            widget: Icon(Icons.arrow_forward_ios),
+          ),
+          Selection(
+            text: LocaleKeys.trustedDevices.tr(),
+            widget: Icon(Icons.arrow_forward_ios),
+          ),
+          Selection(
+            text: LocaleKeys.backup.tr(),
+            widget: Icon(Icons.arrow_forward_ios),
+          ),
         ],
-
       ),
-      floatingActionButton: ElevatedButton(onPressed: (){},child:Text(LocaleKeys.logout.tr(),style: TextStyle(color: Colors.red),) ,),
+      floatingActionButton: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {},
+        child: ElevatedButton(
+          onPressed: () {
+            AuthCubit.get(context).logOut();
+            Navigation.push(context, OnboardScreen());
+          },
+          child: Text(
+            LocaleKeys.logout.tr(),
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      ),
     );
   }
 }

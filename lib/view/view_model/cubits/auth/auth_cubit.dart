@@ -1,15 +1,16 @@
-import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:password_manager/cache/local/cache_helper.dart';
+import 'package:password_manager/core/firebase/firebase.dart';
+import 'package:password_manager/core/models/profile_model.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial());
+  AuthCubit(this.user) : super(AuthInitial());
 
   static AuthCubit get(context) => BlocProvider.of<AuthCubit>(context);
 
@@ -23,13 +24,74 @@ class AuthCubit extends Cubit<AuthState> {
 
   bool isVisible = false;
   bool isLogin = false;
+  late String mobileNumber;
   late String verificationId;
+  ProfileModel user;
 
   int currentPageIndex = 0;
-
+  final db = FirebaseFirestore.instance;
   void nextButton(index) {
     doNavigationPage(index);
     emit(PageChanged());
+  }
+
+  Future<void> addUserToFirestore() async {
+    emit(LoadingAddUserToFireStore());
+    print('********LoadingAddUserToFireStore************');
+    try {
+      await db
+          .collection(FirebaseKeys.users)
+          .doc(mobileController.text) // تأكد من أن هذا هو معرف المستخدم.
+          .set({
+        // يمكنك استخدام .set() إذا كنت ترغب في تحديد معرف الوثيقة.
+        FirebaseKeys.fristName: firstNameController.text,
+        FirebaseKeys.lastName: lastNameController.text,
+        FirebaseKeys.mobileNumber: mobileController.text,
+      }).then((_) {
+        user = ProfileModel(
+            fristName: firstNameController.text,
+            lastName: lastNameController.text,
+            image:
+                'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?t=st=1721896253~exp=1721899853~hmac=d7ff8748613db92fdd13738aa6f05d2c13d04955ee9d59289d797cae92b8d589&w=740',
+            mobileNumber: mobileController.text);
+      });
+
+      emit(SuccessAddUserToFireStore());
+      print('********SuccessAddUserToFireStore************');
+      getUserData();
+    } catch (e) {
+      emit(FaildAddUserToFireStore(msg: e.toString()));
+      print('********FaildAddUserToFireStore ${e.toString()}************');
+    }
+  }
+
+  Future<void> getUserData() async {
+    emit(LoadingGetUserData());
+    print('********SuccessAddUserToFireStore************');
+
+    print('User mobile number: $mobileNumber');
+
+    try {
+      final DocumentSnapshot value =
+          await db.collection(FirebaseKeys.users).doc(mobileNumber).get();
+      if (value.exists) {
+        // تحويل البيانات إلى النموذج الخاص بك
+        final userData =
+            ProfileModel.fromJson(value.data() as Map<String, dynamic>);
+        SharedHelper.saveData(FirebaseKeys.fristName, userData.fristName);
+        SharedHelper.saveData(FirebaseKeys.lastName, userData.lastName);
+        SharedHelper.saveData(FirebaseKeys.mobileNumber, userData.mobileNumber);
+        // معالجة البيانات
+      } else {
+        print('Document does not exist!');
+      }
+      emit(SuccessGetUserData());
+
+      print('********SuccessGetUserData************');
+    } catch (e) {
+      emit(ErrorGetUserData(msg: e.toString()));
+      print('Error fetching user data: $e');
+    }
   }
 
   Future<void> phonAuth(String phoneNumber) async {
@@ -42,6 +104,7 @@ class AuthCubit extends Cubit<AuthState> {
       codeSent: codeSent,
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
+    mobileNumber = phoneNumber;
   }
 
   void verificationCompleted(PhoneAuthCredential credential) async {

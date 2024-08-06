@@ -1,18 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:password_manager/cache/local/cache_helper.dart';
 import 'package:password_manager/core/routing/app_router.dart';
-import 'package:password_manager/core/routing/routes.dart';
 import 'package:password_manager/my_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 late String initialRoute;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
+  await SharedHelper.init();
   await ScreenUtil.ensureScreenSize();
 
   runApp(

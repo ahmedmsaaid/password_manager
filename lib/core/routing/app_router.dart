@@ -3,7 +3,6 @@ import 'package:password_manager/core/routing/routes.dart';
 import 'package:password_manager/view/screens/Login_register/Login_register.dart';
 import 'package:password_manager/view/screens/Login_register/verification_screen.dart';
 import 'package:password_manager/view/screens/add/new_record.dart';
-import 'package:password_manager/view/screens/details/details.dart';
 import 'package:password_manager/view/screens/home/analysis/analysis.dart';
 import 'package:password_manager/view/screens/home/home/home_screen.dart';
 import 'package:password_manager/view/screens/home/passwords/passwords.dart';
@@ -51,10 +50,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => Analysis(),
         );
-      case Routs.details:
-        return MaterialPageRoute(
-          builder: (_) => Details(),
-        );
+      // case Routs.details:
+      //   return MaterialPageRoute(
+      //     builder: (_) => Details(model: ,),
+      //   );
       case Routs.passwords:
         return MaterialPageRoute(
           builder: (_) => Passwords(),
@@ -77,9 +76,6 @@ class AppRoutes {
         );
       default:
         return null;
-
-
-
     }
   }
 }

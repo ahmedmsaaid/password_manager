@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 import 'package:password_manager/view/screens/home/home/home_screen.dart';

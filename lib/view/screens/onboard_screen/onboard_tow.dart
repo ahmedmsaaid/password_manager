@@ -2,11 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 
- import '../../view_model/cubits/auth/auth_cubit.dart';
-import '../Login_register/Login_register.dart';
+import '../../view_model/cubits/auth/auth_cubit.dart';
 
 class OnboardTow extends StatelessWidget {
   const OnboardTow({super.key});
@@ -19,7 +17,7 @@ class OnboardTow extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding:  EdgeInsets.only(top: 40.h),
+              padding: EdgeInsets.only(top: 40.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -45,7 +43,6 @@ class OnboardTow extends StatelessWidget {
                     width: 85.w,
                     height: 12.h,
                     decoration: BoxDecoration(
-        
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.black)),
                   ),
@@ -78,7 +75,8 @@ class OnboardTow extends StatelessWidget {
                     ),
                     Text(
                       LocaleKeys.everyThingInSingleClick.tr(),
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: 8.h,
@@ -103,7 +101,6 @@ class OnboardTow extends StatelessWidget {
                 },
                 child: ElevatedButton(
                   onPressed: () {
-
                     AuthCubit.get(context).doNavigationPage(2);
                   },
                   child: Row(
@@ -116,13 +113,15 @@ class OnboardTow extends StatelessWidget {
                             fontSize: 20.sp,
                             fontWeight: FontWeight.normal),
                       ),
-                      Icon(Icons.arrow_forward_sharp,color: Colors.white,),
+                      Icon(
+                        Icons.arrow_forward_sharp,
+                        color: Colors.white,
+                      ),
                     ],
                   ),
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.circular(
-                              12)),
+                          borderRadius: BorderRadiusDirectional.circular(12)),
                       backgroundColor: Colors.black),
                 ),
               ),
