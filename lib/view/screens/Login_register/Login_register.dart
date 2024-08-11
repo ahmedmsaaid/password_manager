@@ -17,7 +17,7 @@ class LoginRegister extends StatelessWidget {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is CodeSent) {
-          Navigation.push(context, VerificationScreen());
+          Navigation.push(context, const VerificationScreen());
         } else if (state is UserExsts) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -39,7 +39,7 @@ class LoginRegister extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 30.h,
+                    height: cubit.isLogin ? 30.h : 0,
                   ),
                   Image.asset(
                     'assets/icons/logo.png',
@@ -59,7 +59,7 @@ class LoginRegister extends StatelessWidget {
                   ),
                   Container(
                     width: 300.w,
-                    height: 350.h,
+                    height: cubit.isLogin ? 350.h : 420.h,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.r),
                         border: Border.all()),
@@ -82,13 +82,6 @@ class LoginRegister extends StatelessWidget {
                                           cubit.enableRegister();
                                           cubit.clearControllers();
                                         },
-                                        child: Text(
-                                          LocaleKeys.register.tr(),
-                                          style: TextStyle(
-                                              color: !cubit.isLogin
-                                                  ? Colors.white
-                                                  : Colors.black),
-                                        ),
                                         style: ElevatedButton.styleFrom(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -97,6 +90,13 @@ class LoginRegister extends StatelessWidget {
                                             backgroundColor: !cubit.isLogin
                                                 ? Colors.black
                                                 : Colors.white),
+                                        child: Text(
+                                          LocaleKeys.register.tr(),
+                                          style: TextStyle(
+                                              color: !cubit.isLogin
+                                                  ? Colors.white
+                                                  : Colors.black),
+                                        ),
                                       )),
                                 ),
                               ),
@@ -112,6 +112,16 @@ class LoginRegister extends StatelessWidget {
                                           cubit.enableLogin();
                                           cubit.clearControllers();
                                         },
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadiusDirectional
+                                                        .circular(12.r)),
+                                            side: const BorderSide(
+                                                color: Colors.black),
+                                            backgroundColor: cubit.isLogin
+                                                ? Colors.black
+                                                : Colors.white),
                                         child: Text(
                                           LocaleKeys.login.tr(),
                                           style: TextStyle(
@@ -119,16 +129,6 @@ class LoginRegister extends StatelessWidget {
                                                   ? Colors.white
                                                   : Colors.black),
                                         ),
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadiusDirectional
-                                                        .circular(12.r)),
-                                            side:
-                                                BorderSide(color: Colors.black),
-                                            backgroundColor: cubit.isLogin
-                                                ? Colors.black
-                                                : Colors.white),
                                       )),
                                 ),
                               ),
@@ -153,6 +153,57 @@ class LoginRegister extends StatelessWidget {
                                 LocaleKeys.mobileNoError.tr(),
                                 cubit.mobileController,
                                 LocaleKeys.mobileNo.tr(),
+                              ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              SizedBox(
+                                width: 200.w,
+                                height: 45.h,
+                                child: Visibility(
+                                  visible: cubit.fullData(),
+                                  replacement: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadiusDirectional.circular(
+                                                  12.r),
+                                        ),
+                                        side: const BorderSide(
+                                            color: Colors.black),
+                                        backgroundColor: Colors.white),
+                                    child: Text(
+                                      LocaleKeys.getVerificationCode.tr(),
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 15.sp),
+                                    ),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (cubit.isLogin) {
+                                        cubit.phonAuth(
+                                            cubit.mobileController.text);
+                                      } else {
+                                        cubit.chickIfUserExets(
+                                            cubit.mobileController.text);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadiusDirectional
+                                                    .circular(12.r)),
+                                        side: const BorderSide(
+                                            color: Colors.black),
+                                        backgroundColor: Colors.black),
+                                    child: Text(
+                                      LocaleKeys.getVerificationCode.tr(),
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 15.sp),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -183,6 +234,63 @@ class LoginRegister extends StatelessWidget {
                                     LocaleKeys.mobileNoError.tr(),
                                     cubit.mobileController,
                                     LocaleKeys.mobileNo.tr()),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 50),
+                                  child: SizedBox(
+                                    width: 80.w,
+                                    height: 45.h,
+                                    child: Visibility(
+                                      visible: cubit.fullData(),
+                                      replacement: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadiusDirectional
+                                                      .circular(12.r),
+                                            ),
+                                            side: const BorderSide(
+                                                color: Colors.black),
+                                            backgroundColor: Colors.white),
+                                        child: Text(
+                                          LocaleKeys.getVerificationCode.tr(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15.sp),
+                                        ),
+                                      ),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          if (cubit.isLogin) {
+                                            cubit.phonAuth(
+                                                cubit.mobileController.text);
+                                          } else {
+                                            cubit.chickIfUserExets(
+                                                cubit.mobileController.text);
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadiusDirectional
+                                                        .circular(12.r)),
+                                            side: const BorderSide(
+                                                color: Colors.black),
+                                            backgroundColor: Colors.black),
+                                        child: Text(
+                                          LocaleKeys.getVerificationCode.tr(),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.sp),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -195,47 +303,6 @@ class LoginRegister extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 50.h,
-                  ),
-                  SizedBox(
-                    width: 320.w,
-                    height: 45.h,
-                    child: Visibility(
-                      visible: cubit.fullData(),
-                      replacement: ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          LocaleKeys.getVerificationCode.tr(),
-                          style:
-                              TextStyle(color: Colors.black, fontSize: 15.sp),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(12.r)),
-                            side: BorderSide(color: Colors.black),
-                            backgroundColor: Colors.white),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (cubit.isLogin) {
-                            cubit.phonAuth(cubit.mobileController.text);
-                          } else {
-                            cubit.chickIfUserExets(cubit.mobileController.text);
-                          }
-                        },
-                        child: Text(
-                          LocaleKeys.getVerificationCode.tr(),
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 15.sp),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(12.r)),
-                            side: BorderSide(color: Colors.black),
-                            backgroundColor: Colors.black),
-                      ),
-                    ),
                   ),
                 ],
               ),

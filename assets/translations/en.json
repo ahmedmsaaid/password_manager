@@ -76,7 +76,11 @@
   "analysisIcon":"ANALYSIS",
   "settingIcon": "SETTING",
   "wrongOtp":"Invalid OTP Code",
-  "userExists":"The number is already registered"
+  "userExists":"The number is already registered",
+  "language":"Language",
+  "arabic":"العربيه",
+  "engilsh":"English",
+  "darkmode":"Dark mode"
  
 
 

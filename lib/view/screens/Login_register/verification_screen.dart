@@ -25,7 +25,7 @@ class VerificationScreen extends StatelessWidget {
         },
         listener: (context, state) {
           if (state is Success) {
-            Navigation.push(context, HomeScreen());
+            Navigation.push(context, const HomeScreen());
             if (!cubit.isLogin) {
               cubit.addUserToFirestore();
             }
@@ -33,7 +33,7 @@ class VerificationScreen extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(LocaleKeys.wrongOtp.tr()),
               backgroundColor: Colors.red,
-              duration: Duration(seconds: 3),
+              duration: const Duration(seconds: 3),
             ));
           }
         },
@@ -88,30 +88,30 @@ class VerificationScreen extends StatelessWidget {
                           focusedBorderColor: Colors.green,
                           enabledBorderColor: Colors.black,
                           cursorColor: Colors.green,
-                          decoration:
-                              InputDecoration(border: OutlineInputBorder()),
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder()),
                           numberOfFields: 6,
                         ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 300.h,
+                    height: 100.h,
                   ),
                   ElevatedButton(
                     onPressed: () {
                       cubit.submitOtp(otp);
                     },
-                    child: Text(
-                      LocaleKeys.go.tr(),
-                      style: TextStyle(color: Colors.white, fontSize: 15.sp),
-                    ),
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadiusDirectional.circular(12.r)),
-                        side: BorderSide(color: Colors.black),
+                        side: const BorderSide(color: Colors.black),
                         backgroundColor: Colors.black),
+                    child: Text(
+                      LocaleKeys.go.tr(),
+                      style: TextStyle(color: Colors.white, fontSize: 15.sp),
+                    ),
                   ),
                 ],
               ),

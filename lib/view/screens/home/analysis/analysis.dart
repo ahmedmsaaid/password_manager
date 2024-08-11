@@ -20,9 +20,9 @@ class Analysis extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () {
-              Navigation.push(context, ProfileScreen());
+              Navigation.push(context, const ProfileScreen());
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person_outline,
               color: Colors.black,
             )),
@@ -33,9 +33,9 @@ class Analysis extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
               onPressed: () {
-                Navigation.push(context, NewRecord());
+                Navigation.push(context, const NewRecord());
               },
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
             ),
           ),
         ],
@@ -51,7 +51,7 @@ class Analysis extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(100.0, 20.0, 100.0, 20),
                     child: Stack(children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 400,
                         height: 160,
                         child: CircularProgressIndicator(
@@ -80,7 +80,8 @@ class Analysis extends StatelessWidget {
                             alignment: AlignmentDirectional.center,
                             child: Text(
                               '${cubit.analysisProgress().round()} %',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             )),
                       )
                     ]),
@@ -90,61 +91,61 @@ class Analysis extends StatelessWidget {
                     children: [
                       Text(
                         '${cubit.analysisProgress().round()}% secured',
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black87),
                             borderRadius: BorderRadius.circular(12)),
                         child: Column(
                           children: [
                             Text('${cubit.safe.round()}'),
-                            Text('Safe'),
+                            const Text('Safe'),
                           ],
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black87),
                             borderRadius: BorderRadius.circular(12)),
                         child: Column(
                           children: [
                             Text('${cubit.wake.round()}'),
-                            Text('wake'),
+                            const Text('wake'),
                           ],
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black87),
                             borderRadius: BorderRadius.circular(12)),
                         child: Column(
                           children: [
                             Text('${cubit.resk.round()}'),
-                            Text('rask'),
+                            const Text('rask'),
                           ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Selection(
                       text: LocaleKeys.analysis.tr(),
                       widget: IconButton(
-                        icon: Icon(Icons.filter_list_rounded),
+                        icon: const Icon(Icons.filter_list_rounded),
                         onPressed: () {},
                       )),
                 ],
@@ -155,7 +156,7 @@ class Analysis extends StatelessWidget {
                 child: BlocBuilder<DataCubit, DataState>(
                   builder: (context, state) {
                     return ListView.separated(
-                        separatorBuilder: (context, index) => Divider(
+                        separatorBuilder: (context, index) => const Divider(
                               color: Colors.grey,
                               thickness: .5,
                               endIndent: 50,

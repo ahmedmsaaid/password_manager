@@ -76,7 +76,11 @@
   "analysisIcon":"تحليل",
   "settingIcon": "الاعدادات",
    "wrongOtp":"رمز OTP غير صالح",
-   "userExists":"الرقم مسجل من قبل"
+   "userExists":"الرقم مسجل من قبل",
+   "language":"اللغه",
+   "arabic":"العربيه",
+   "engilsh":"English",
+   "darkmode":"الوضع المظلم  "
 
 
 

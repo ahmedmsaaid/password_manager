@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
@@ -13,7 +14,8 @@ class EdirProfile {
       context: context,
       builder: (context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
+            height: 350.h,
             child: BlocBuilder<DataCubit, DataState>(
               builder: (context, state) {
                 var cubit = DataCubit.get(context);
