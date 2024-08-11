@@ -16,39 +16,6 @@ class OnboardTow extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.only(top: 40.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: 85.w,
-                    height: 12.h,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black)),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(3.sp),
-                    width: 85.w,
-                    height: 12.h,
-                    decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black)),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(3),
-                    width: 85.w,
-                    height: 12.h,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.black)),
-                  ),
-                ],
-              ),
-            ),
             SizedBox(
               height: 60.h,
             ),
@@ -91,40 +58,6 @@ class OnboardTow extends StatelessWidget {
             ),
             SizedBox(
               height: 90,
-            ),
-            SizedBox(
-              width: 320,
-              height: 45,
-              child: BlocListener<AuthCubit, AuthState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
-                child: ElevatedButton(
-                  onPressed: () {
-                    AuthCubit.get(context).doNavigationPage(2);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        LocaleKeys.next.tr(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.normal),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_sharp,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusDirectional.circular(12)),
-                      backgroundColor: Colors.black),
-                ),
-              ),
             ),
           ],
         ),

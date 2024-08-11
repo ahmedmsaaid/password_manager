@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/models/generator.dart';
 import 'package:password_manager/core/models/password_model.dart';
+import 'package:password_manager/core/widgets/change_password.dart';
 import 'package:password_manager/core/widgets/widgets.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
@@ -43,7 +44,7 @@ class Details extends StatelessWidget {
               padding: EdgeInsets.all(8.0.sp),
               child: IconButton(
                 onPressed: () {
-                  DataCubit.get(context).remove(model.index);
+                  DataCubit.get(context).remove(model.id ?? '');
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,
                       content: Text('Password Deleted')));
@@ -58,240 +59,209 @@ class Details extends StatelessWidget {
             ),
           ],
         ),
-        body: ListView(
-          children: [
-            ListTile(
-              leading: Visibility(
-                  visible: model.icon != null,
-                  replacement: CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage(Generator.logo(model.name)),
-                  ),
-                  child: CircleAvatar(
-                      radius: 20, child: Image.network(model.icon ?? ''))),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.name ?? '',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    model.userId ?? '',
-                    style: TextStyle(color: Colors.grey, fontSize: 15.sp),
-                  ),
-                ],
-              ),
-            ),
-            Selection(
-              text: LocaleKeys.detailsSettings.tr(),
-              widget: Visibility(
-                visible: cubit.showDeatels,
-                replacement: IconButton(
-                  onPressed: () {
-                    cubit.showDeatelsButton();
-                  },
-                  icon: Icon(Icons.keyboard_arrow_up),
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    cubit.showDeatelsButton();
-                  },
-                  icon: Icon(Icons.keyboard_arrow_down),
-                ),
-              ),
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: .5.h,
-              endIndent: 25.w,
-              indent: 25.w,
-            ),
-            Visibility(
-              visible: cubit.showDeatels,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.sp),
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.link.tr(),
-                          style: TextStyle(fontSize: 16.sp),
-                        ),
-                        SizedBox(
-                          width: 80.w,
-                        ),
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              Generator.link(model.name),
-                              style: TextStyle(
-                                  fontSize: 12.sp, color: Colors.blue),
-                            ))
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.sp),
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.userId.tr(),
-                          style: TextStyle(fontSize: 16.sp),
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        Text(
-                          model.userId ?? '',
-                          style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.sp),
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.password.tr(),
-                          style: TextStyle(fontSize: 18.sp),
-                        ),
-                        SizedBox(
-                          width: 50.w,
-                        ),
-                        Text(
-                          model.password ?? '',
-                          style: TextStyle(fontSize: 14.sp, color: Colors.grey),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 30.sp),
-                    child: Row(
-                      children: [
-                        Text(
-                          LocaleKeys.autofill.tr(),
-                          style: TextStyle(fontSize: 18.sp),
-                        ),
-                        SizedBox(
-                          width: 50.w,
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Switch(
-                            activeColor: Colors.blueAccent,
-                            inactiveTrackColor: CupertinoColors.white,
-                            value: false,
-                            onChanged: (value) {
-                              value = value;
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.r),
-                              side: BorderSide(
-                                  color: Colors.black.withOpacity(.2))),
-                          backgroundColor: Colors.white,
-                        ),
-                        onPressed: () {
-                          Widgets.copy(model.password!, context);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Coped'),
-                            backgroundColor: Colors.green,
-                          ));
-                        },
-                        child: Text(
-                          LocaleKeys.copyPassword.tr(),
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.normal),
-                        ),
+        body: BlocBuilder<DataCubit, DataState>(
+          builder: (context, state) {
+            return ListView(
+              children: [
+                ListTile(
+                  leading: Visibility(
+                      visible: model.icon != null,
+                      replacement: CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage(Generator.logo(model.name)),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.sp),
-                              side: BorderSide(
-                                  color: Colors.black.withOpacity(.2))),
-                          backgroundColor: Colors.white,
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Center(
-                                  child: Text(
-                                    'New Password',
-                                  ),
-                                ),
-                                content: Expanded(
-                                  child: TextFormField(
-                                    validator: (value) {
-                                      if ((value ?? '').trim().isEmpty) {
-                                        return LocaleKeys.passwordError.tr();
-                                      } else {
-                                        return null;
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                      border: UnderlineInputBorder(),
-                                      labelText: LocaleKeys.password.tr(),
-                                      suffixIcon: Visibility(
-                                        visible: false,
-                                        replacement: Icon(
-                                          Icons.check_circle_outline,
-                                          color: Colors.green,
-                                        ),
-                                        child: Icon(Icons.check_circle_outline),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {}, child: Text('Done'))
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: Text(
-                          LocaleKeys.changPassword.tr(),
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.normal),
-                        ),
+                      child: CircleAvatar(
+                          radius: 20, child: Image.network(model.icon ?? ''))),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.name ?? '',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        model.userId ?? '',
+                        style: TextStyle(color: Colors.grey, fontSize: 15.sp),
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+                Selection(
+                  text: LocaleKeys.detailsSettings.tr(),
+                  widget: Visibility(
+                    visible: cubit.showDeatels,
+                    replacement: IconButton(
+                      onPressed: () {
+                        cubit.showDeatelsButton();
+                      },
+                      icon: Icon(Icons.keyboard_arrow_up),
+                    ),
+                    child: IconButton(
+                      onPressed: () {
+                        cubit.showDeatelsButton();
+                      },
+                      icon: Icon(Icons.keyboard_arrow_down),
+                    ),
+                  ),
+                ),
+                Divider(
+                  color: Colors.grey,
+                  thickness: .5.h,
+                  endIndent: 25.w,
+                  indent: 25.w,
+                ),
+                Visibility(
+                  visible: cubit.showDeatels,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              LocaleKeys.link.tr(),
+                              style: TextStyle(fontSize: 16.sp),
+                            ),
+                            SizedBox(
+                              width: 80.w,
+                            ),
+                            TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  Generator.link(model.name),
+                                  style: TextStyle(
+                                      fontSize: 12.sp, color: Colors.blue),
+                                ))
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              LocaleKeys.userId.tr(),
+                              style: TextStyle(fontSize: 16.sp),
+                            ),
+                            SizedBox(
+                              width: 50,
+                            ),
+                            Text(
+                              model.userId ?? '',
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.grey),
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              LocaleKeys.password.tr(),
+                              style: TextStyle(fontSize: 18.sp),
+                            ),
+                            SizedBox(
+                              width: 50.w,
+                            ),
+                            Text(
+                              model.password ?? '',
+                              style: TextStyle(
+                                  fontSize: 14.sp, color: Colors.grey),
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 30.sp),
+                        child: Row(
+                          children: [
+                            Text(
+                              LocaleKeys.autofill.tr(),
+                              style: TextStyle(fontSize: 18.sp),
+                            ),
+                            SizedBox(
+                              width: 50.w,
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: Switch(
+                                activeColor: Colors.blueAccent,
+                                inactiveTrackColor: CupertinoColors.white,
+                                value: false,
+                                onChanged: (value) {
+                                  value = value;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  side: BorderSide(
+                                      color: Colors.black.withOpacity(.2))),
+                              backgroundColor: Colors.white,
+                            ),
+                            onPressed: () {
+                              Widgets.copy(model.password!, context);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Coped'),
+                                backgroundColor: Colors.green,
+                              ));
+                            },
+                            child: Text(
+                              LocaleKeys.copyPassword.tr(),
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.sp),
+                                  side: BorderSide(
+                                      color: Colors.black.withOpacity(.2))),
+                              backgroundColor: Colors.white,
+                            ),
+                            onPressed: () {
+                              ChangePassword.dialog(context, model.id);
+                            },
+                            child: Text(
+                              LocaleKeys.changPassword.tr(),
+                              style: TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

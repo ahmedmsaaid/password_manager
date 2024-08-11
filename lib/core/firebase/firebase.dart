@@ -12,5 +12,6 @@ class FirebaseKeys {
   static const String mobileNumber = 'mobileNumber';
   static const String info = 'info';
   static const String data = 'data';
+  static const String image = 'image';
   static const String strength = 'strength';
 }

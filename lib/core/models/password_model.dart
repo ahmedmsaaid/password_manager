@@ -1,6 +1,7 @@
 class PasswordModel {
   final String? icon;
   final String? name;
+  final String? id;
   final int? index;
   final int? stringth;
   final String? link;
@@ -11,6 +12,7 @@ class PasswordModel {
   PasswordModel({
     required this.icon,
     required this.name,
+    required this.id,
     required this.index,
     required this.link,
     required this.userId,
@@ -22,6 +24,7 @@ class PasswordModel {
   factory PasswordModel.fromJson(Map<String, dynamic> json) {
     return PasswordModel(
       icon: json['icon'],
+      id: json['id'],
       name: json['name'],
       index: json['index'] as int?,
       link: json['link'],
@@ -36,6 +39,7 @@ class PasswordModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['icon'] = icon;
     data['name'] = name;
+    data['id'] = id;
     data['index'] = index;
     data['link'] = link;
     data['userId'] = userId;

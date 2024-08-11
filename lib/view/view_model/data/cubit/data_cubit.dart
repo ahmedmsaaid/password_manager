@@ -1,9 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:password_manager/cache/local/cache_helper.dart';
 import 'package:password_manager/core/firebase/firebase.dart';
 import 'package:password_manager/core/models/password_model.dart';
+import 'package:password_manager/core/models/profile_model.dart';
+import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
 part 'data_state.dart';
@@ -19,6 +26,10 @@ class DataCubit extends Cubit<DataState> {
   final websiteNameController = TextEditingController();
   final userIdController = TextEditingController();
   final passwordController = TextEditingController();
+  final fristName = TextEditingController();
+  final lastName = TextEditingController();
+  XFile? photo;
+  String imageUrl = '';
   late int strength;
   late int count;
   double safe = 0;
@@ -26,6 +37,7 @@ class DataCubit extends Cubit<DataState> {
   double resk = 0;
   double analysis = 0.58;
   bool showDeatels = false;
+  bool trueMark = false;
 
   String newPassword = '';
   bool letters = true;
@@ -64,9 +76,84 @@ class DataCubit extends Cubit<DataState> {
     return analysis * 100;
   }
 
+  //edit Profile Screen
+
+  bool trueMarkButton(String value) {
+    emit(ChangingtrueMarkIcon());
+    bool val = false;
+    if (value.length > 3) {
+      val = true;
+    }
+
+    return val;
+  }
+
+  Future<void> picImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    photo = image;
+    if (photo != null) {
+      // استخدم الصورة التي تم اختيارها
+      print('**********************Selected image path: ${photo!.path}');
+    } else {
+      print('**************No image selected.');
+    }
+  }
+
+  // إضافة صورة إلى Firebase Storage
+  Future<void> addImageTOfireStorage() async {
+    try {
+      Reference refrenceRoot = FirebaseStorage.instance.ref();
+      Reference refrenceDirToimages = refrenceRoot.child('images');
+      Reference referenceToUbload = refrenceDirToimages
+          .child(SharedHelper.getData(FirebaseKeys.mobileNumber));
+
+      // التأكد من وجود صورة
+      if (photo != null) {
+        await referenceToUbload.putFile(File(photo!.path));
+        imageUrl = await referenceToUbload.getDownloadURL();
+        print(imageUrl);
+        addUserToFirestore();
+      } else {
+        throw Exception('No image selected.');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+    }
+  }
+
+  Future<void> addUserToFirestore() async {
+    emit(LoadingAddUserToFireStore());
+    print('********LoadingAddUserToFireStore************');
+    try {
+      await db
+          .collection(FirebaseKeys.users)
+          .doc(SharedHelper.getData(
+              FirebaseKeys.mobileNumber)) // تأكد من أن هذا هو معرف المستخدم.
+          .set({
+        // يمكنك استخدام .set() إذا كنت ترغب في تحديد معرف الوثيقة.
+        FirebaseKeys.fristName: fristName.text,
+        FirebaseKeys.lastName: lastName.text,
+        FirebaseKeys.image: imageUrl
+      }, SetOptions(merge: true));
+      SharedHelper.saveData(FirebaseKeys.image, imageUrl);
+      await SharedHelper.saveData(FirebaseKeys.fristName, fristName.text);
+      await SharedHelper.saveData(FirebaseKeys.lastName, lastName.text);
+      emit(SuccessAddUserToFireStore());
+      clear();
+      print('********SuccessAddUserToFireStore************');
+    } catch (e) {
+      emit(FaildAddUserToFireStore(e.toString()));
+      print('********FaildAddUserToFireStore ${e.toString()}************');
+    }
+  }
+
   //detales screen
   void showDeatelsButton() {
-    showDeatels != showDeatels;
+    emit(LoadingShowDeatelsButton());
+
+    showDeatels = !showDeatels;
+    print(showDeatels);
     emit(ShowDeatelsButton());
   }
 
@@ -77,6 +164,8 @@ class DataCubit extends Cubit<DataState> {
     websiteNameController.clear();
     userIdController.clear();
     passwordController.clear();
+    fristName.clear();
+    lastName.clear();
   }
 
   String genetarePassword(
@@ -116,6 +205,19 @@ class DataCubit extends Cubit<DataState> {
     return strength;
   }
 
+  int getPasswordId(userInputValue) {
+    int index = 0;
+    int count = 0;
+    for (PasswordModel model in passwords) {
+      if (model.name == userInputValue) {
+        index = count;
+      } else {
+        count += 1;
+      }
+    }
+    return index;
+  }
+
   double stringthChickvalue(Password) {
     double strength;
 
@@ -148,21 +250,43 @@ class DataCubit extends Cubit<DataState> {
     }
 
     emit(LoadingAddData());
-    print('********LoadingAddDataToFireStore************');
-    print('********$count************');
 
     try {
-      await db
+      DocumentReference data = db
           .collection(FirebaseKeys.users)
           .doc(SharedHelper.getData(FirebaseKeys.mobileNumber))
           .collection(FirebaseKeys.data)
-          .doc(count.toString())
-          .set({
+          .doc();
+      await data.set({
         FirebaseKeys.name: websiteNameController.text,
         FirebaseKeys.userId: userIdController.text,
         FirebaseKeys.password: passwordController.text,
         FirebaseKeys.index: count,
+        "id": data.id,
       });
+
+      emit(SuccessAddData());
+      clear();
+      print('********SuccessAddDataToFireStore************');
+    } catch (e) {
+      emit(ErrorAddData(msg: e.toString()));
+      print('********FaildAddDataToFireStore ${e.toString()}************');
+    }
+  }
+
+  Future<void> changePassword(String id) async {
+    emit(LoadingAddData());
+    print('********LoadingAddDataToFireStore************');
+
+    try {
+      DocumentReference data = db
+          .collection(FirebaseKeys.users)
+          .doc(SharedHelper.getData(FirebaseKeys.mobileNumber))
+          .collection(FirebaseKeys.data)
+          .doc(id);
+      await data.set({
+        FirebaseKeys.password: passwordController.text,
+      }, SetOptions(merge: true));
 
       emit(SuccessAddData());
       clear();
@@ -206,19 +330,21 @@ class DataCubit extends Cubit<DataState> {
     }
   }
 
-  Future<void> remove(Index) async {
+  Future<void> remove(String id) async {
     emit(Deleting());
     try {
-      await db
-        ..collection(FirebaseKeys.users)
-            .doc(SharedHelper.getData(FirebaseKeys.mobileNumber))
-            .collection(FirebaseKeys.data)
-            .doc(Index.toString())
-            .delete();
+      DocumentReference docRef = db
+          .collection(FirebaseKeys.users)
+          .doc(SharedHelper.getData(FirebaseKeys.mobileNumber))
+          .collection(FirebaseKeys.data)
+          .doc(id);
+
+      await docRef.delete();
+
       emit(Deleted());
-    } on Exception catch (e) {
+    } catch (e) {
       emit(DeleteError(e.toString()));
-      print('delete error ${e.toString()}');
+      print('delete error: ${e.toString()}');
     }
   }
 

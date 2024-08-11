@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_manager/cache/local/cache_helper.dart';
 import 'package:password_manager/core/firebase/firebase.dart';
 import 'package:password_manager/core/models/profile_model.dart';
+import 'package:password_manager/translation/locate_keys.g.dart';
 
 part 'auth_state.dart';
 
@@ -35,6 +37,19 @@ class AuthCubit extends Cubit<AuthState> {
     emit(PageChanged());
   }
 
+  Future<void> chickIfUserExets(String phoneNumber) async {
+    final DocumentSnapshot value =
+        await db.collection(FirebaseKeys.users).doc(phoneNumber).get();
+    if (value.exists) {
+      emit(UserExsts());
+      print(LocaleKeys.userExists.tr());
+    } else {
+      phonAuth(phoneNumber);
+    }
+
+    // تحويل البيانات إلى الن
+  }
+
   Future<void> addUserToFirestore() async {
     emit(LoadingAddUserToFireStore());
     print('********LoadingAddUserToFireStore************');
@@ -51,8 +66,6 @@ class AuthCubit extends Cubit<AuthState> {
         user = ProfileModel(
             fristName: firstNameController.text,
             lastName: lastNameController.text,
-            image:
-                'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?t=st=1721896253~exp=1721899853~hmac=d7ff8748613db92fdd13738aa6f05d2c13d04955ee9d59289d797cae92b8d589&w=740',
             mobileNumber: mobileController.text);
       });
 
@@ -75,12 +88,13 @@ class AuthCubit extends Cubit<AuthState> {
       final DocumentSnapshot value =
           await db.collection(FirebaseKeys.users).doc(mobileNumber).get();
       if (value.exists) {
-        // تحويل البيانات إلى النموذج الخاص بك
         final userData =
             ProfileModel.fromJson(value.data() as Map<String, dynamic>);
-        SharedHelper.saveData(FirebaseKeys.fristName, userData.fristName);
-        SharedHelper.saveData(FirebaseKeys.lastName, userData.lastName);
-        SharedHelper.saveData(FirebaseKeys.mobileNumber, userData.mobileNumber);
+
+        await SharedHelper.saveData(FirebaseKeys.fristName, userData.fristName);
+        await SharedHelper.saveData(FirebaseKeys.lastName, userData.lastName);
+        await SharedHelper.saveData(
+            FirebaseKeys.mobileNumber, userData.mobileNumber);
         // معالجة البيانات
       } else {
         print('Document does not exist!');
@@ -105,6 +119,7 @@ class AuthCubit extends Cubit<AuthState> {
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
     mobileNumber = phoneNumber;
+    getUserData();
   }
 
   void verificationCompleted(PhoneAuthCredential credential) async {
@@ -189,8 +204,11 @@ class AuthCubit extends Cubit<AuthState> {
     print('page num $index');
   }
 
-  void doNavigationPage(index) {
+  void doNavigationPage(int index) {
     pageController.jumpToPage(index);
+    print(index);
+    pageController.dispose();
+
     emit(PageChanged());
   }
 }

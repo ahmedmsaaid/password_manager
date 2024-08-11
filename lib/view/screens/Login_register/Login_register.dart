@@ -18,6 +18,15 @@ class LoginRegister extends StatelessWidget {
       listener: (context, state) {
         if (state is CodeSent) {
           Navigation.push(context, VerificationScreen());
+        } else if (state is UserExsts) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                LocaleKeys.userExists.tr(),
+              ),
+              backgroundColor: Colors.red,
+            ),
+          );
         }
       },
       builder: (context, state) {
@@ -131,12 +140,12 @@ class LoginRegister extends StatelessWidget {
                           replacement: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.all(15.0.sp),
+                                padding: EdgeInsets.all(10.0.sp),
                                 child: Align(
                                     alignment: AlignmentDirectional.topStart,
                                     child: Text(
                                       LocaleKeys.personalDetails.tr(),
-                                      style: TextStyle(fontSize: 18.sp),
+                                      style: TextStyle(fontSize: 16.sp),
                                     )),
                               ),
                               Widgets.textFormField(
@@ -151,12 +160,12 @@ class LoginRegister extends StatelessWidget {
                             child: ListView(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(15.0.sp),
+                                  padding: EdgeInsets.all(10.0.sp),
                                   child: Align(
                                       alignment: AlignmentDirectional.topStart,
                                       child: Text(
                                         LocaleKeys.personalDetails.tr(),
-                                        style: TextStyle(fontSize: 18.sp),
+                                        style: TextStyle(fontSize: 16.sp),
                                       )),
                                 ),
                                 Widgets.textFormField(
@@ -208,7 +217,11 @@ class LoginRegister extends StatelessWidget {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
-                          cubit.phonAuth(cubit.mobileController.text);
+                          if (cubit.isLogin) {
+                            cubit.phonAuth(cubit.mobileController.text);
+                          } else {
+                            cubit.chickIfUserExets(cubit.mobileController.text);
+                          }
                         },
                         child: Text(
                           LocaleKeys.getVerificationCode.tr(),

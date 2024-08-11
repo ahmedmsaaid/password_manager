@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/cache/local/cache_helper.dart';
 import 'package:password_manager/core/routing/app_router.dart';
 import 'package:password_manager/my_app.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 late String initialRoute;
 void main() async {

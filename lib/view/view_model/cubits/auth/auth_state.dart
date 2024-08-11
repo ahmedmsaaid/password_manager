@@ -42,6 +42,8 @@ final class ErrorRigester extends AuthState {
 
 final class LoadingGetUserData extends AuthState {}
 
+final class UserExsts extends AuthState {}
+
 final class SuccessGetUserData extends AuthState {}
 
 final class ErrorGetUserData extends AuthState {

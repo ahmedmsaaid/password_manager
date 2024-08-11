@@ -26,7 +26,9 @@ class VerificationScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is Success) {
             Navigation.push(context, HomeScreen());
-            cubit.addUserToFirestore();
+            if (!cubit.isLogin) {
+              cubit.addUserToFirestore();
+            }
           } else if (state is Error) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(LocaleKeys.wrongOtp.tr()),

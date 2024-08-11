@@ -44,7 +44,7 @@
   "switchAccount": "تبديل الحساب",
   "trustedDevices": "الاجهزه الموثوقه",
   "backup": "نسخ احتياطي",
-  "logout": "تسجيب الخروج",
+  "logout": "تسجيل الخروج",
   "safe": "امن",
   "weak": "ضعيف",
   "risk": "مجازفة ",
@@ -75,7 +75,8 @@
   "searchIcon": "بحث",
   "analysisIcon":"تحليل",
   "settingIcon": "الاعدادات",
-   "wrongOtp":"رمز OTP غير صالح"
+   "wrongOtp":"رمز OTP غير صالح",
+   "userExists":"الرقم مسجل من قبل"
 
 
 

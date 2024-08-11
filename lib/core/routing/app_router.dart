@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:password_manager/core/models/profile_model.dart';
 import 'package:password_manager/core/routing/routes.dart';
 import 'package:password_manager/view/screens/Login_register/Login_register.dart';
 import 'package:password_manager/view/screens/Login_register/verification_screen.dart';
@@ -13,6 +15,7 @@ import 'package:password_manager/view/screens/onboard_screen/onboard_three.dart'
 import 'package:password_manager/view/screens/onboard_screen/onboard_tow.dart';
 import 'package:password_manager/view/screens/profile/profile_screen.dart';
 import 'package:password_manager/view/screens/splash/splash_screen.dart';
+import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 
 class AppRoutes {
   Route? generateRoute(RouteSettings settings) {
@@ -60,7 +63,10 @@ class AppRoutes {
         );
       case Routs.profileScreen:
         return MaterialPageRoute(
-          builder: (_) => ProfileScreen(),
+          builder: (_) => BlocProvider(
+            create: (context) => AuthCubit(ProfileModel())..getUserData,
+            child: ProfileScreen(),
+          ),
         );
       case Routs.settingsScreen:
         return MaterialPageRoute(

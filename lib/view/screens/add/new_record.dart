@@ -56,13 +56,17 @@ class NewRecord extends StatelessWidget {
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(),
                         labelText: LocaleKeys.nameFailed.tr(),
-                        suffixIcon: Visibility(
-                            visible: false,
-                            replacement: Icon(
-                              Icons.check_circle_outline,
-                              color: Colors.green,
-                            ),
-                            child: Icon(Icons.check_circle_outline)),
+                        suffixIcon: BlocBuilder<DataCubit, DataState>(
+                          builder: (context, state) {
+                            return cubit.trueMarkButton(
+                                    cubit.websiteNameController.text)
+                                ? Icon(
+                                    Icons.check_circle_outline,
+                                    color: Colors.green,
+                                  )
+                                : Icon(Icons.check_circle_outline);
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -97,13 +101,16 @@ class NewRecord extends StatelessWidget {
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(),
                         labelText: LocaleKeys.userIdFailed.tr(),
-                        suffixIcon: Visibility(
-                          visible: false,
-                          replacement: Icon(
-                            Icons.check_circle_outline,
-                            color: Colors.green,
-                          ),
-                          child: Icon(Icons.check_circle_outline),
+                        suffixIcon: BlocBuilder<DataCubit, DataState>(
+                          builder: (context, state) {
+                            return cubit
+                                    .trueMarkButton(cubit.userIdController.text)
+                                ? Icon(
+                                    Icons.check_circle_outline,
+                                    color: Colors.green,
+                                  )
+                                : Icon(Icons.check_circle_outline);
+                          },
                         ),
                       ),
                     ),
@@ -352,7 +359,6 @@ class NewRecord extends StatelessWidget {
                                     DataCubit.get(context).addDataToFirestore();
                                     DataCubit.get(context).getDataFireStore();
                                     DataCubit.get(context).chickAnalysis();
-                                    DataCubit.get(context).clear();
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

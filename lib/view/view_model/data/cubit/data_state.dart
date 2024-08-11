@@ -53,8 +53,22 @@ final class ShowDeatelsButton extends DataState {}
 
 final class Deleted extends DataState {}
 
+final class ChangingtrueMarkIcon extends DataState {}
+
+final class LoadingShowDeatelsButton extends DataState {}
+
+final class LoadingAddUserToFireStore extends DataState {}
+
+final class SuccessAddUserToFireStore extends DataState {}
+
 final class DeleteError extends DataState {
   final String msg;
 
   DeleteError(this.msg);
+}
+
+final class FaildAddUserToFireStore extends DataState {
+  final String msg;
+
+  FaildAddUserToFireStore(this.msg);
 }

@@ -12,7 +12,7 @@ class Generator {
         link = 'https://www.Adobe.com';
       case 'microsoft':
         link = 'https://www.microsoft.com';
-      case 'netflix':
+      case 'netflex':
         link = 'https://www.netflix.com';
       case 'instagram':
         link = 'https://www.instagram.com';
@@ -40,7 +40,7 @@ class Generator {
         logo = 'assets/logos/Adobe.png';
       case 'microsoft':
         logo = 'assets/logos/microsoft.png';
-      case 'netflix':
+      case 'netflex':
         logo = 'assets/logos/netflix.png';
       case 'instagram':
         logo = 'assets/logos/instagram.png';

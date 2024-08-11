@@ -9,103 +9,112 @@ import '../../../../translation/locate_keys.g.dart';
 import '../../add/new_record.dart';
 import '../../profile/profile_screen.dart';
 
-
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         leading: IconButton(
-            onPressed: (){
-              Navigation.push(context, ProfileScreen());
+            onPressed: () {
+              Navigation.push(context, const ProfileScreen());
             },
-            icon:Icon(Icons.person_outline,
-              color: Colors.black,)
-        ),
+            icon: const Icon(
+              Icons.person_outline,
+              color: Colors.black,
+            )),
         centerTitle: true,
         title: Text(LocaleKeys.setting.tr()),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              onPressed: (){Navigation.push(context, NewRecord());},
-              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigation.push(context, const NewRecord());
+              },
+              icon: const Icon(Icons.add),
             ),
           ),
         ],
       ),
       body: ListView(
-          children: [
-        Selection(
-          text: LocaleKeys.profile.tr(),
-          widget: IconButton(
+        children: [
+          Selection(
+            text: LocaleKeys.profile.tr(),
+            widget: IconButton(
               onPressed: () {
-                Navigation.push(context, ProfileScreen());
+                Navigation.push(context, const ProfileScreen());
               },
               icon: Icon(
                 Icons.keyboard_arrow_right_outlined,
                 size: 30.sp,
-              ),),
-
-        ),
-            Selection(
-              text: LocaleKeys.permissions.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  size: 30.sp,
-                ),),
-
+              ),
             ),
-            Selection(
-              text: LocaleKeys.sync.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Switch(value: true,onChanged: (value){
-                  value=value;
-                },),),
-
+          ),
+          Selection(
+            text: LocaleKeys.permissions.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 30.sp,
+              ),
             ),
-            Selection(
-              text: LocaleKeys.autofill.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Switch(value: false,onChanged: (value){
-                  value=value;
-                },),),
-
+          ),
+          Selection(
+            text: LocaleKeys.sync.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: Switch(
+                value: true,
+                onChanged: (value) {
+                  value = value;
+                },
+              ),
             ),
-            Selection(
-              text: LocaleKeys.about.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  size: 30.sp,
-                ),),
-
+          ),
+          Selection(
+            text: LocaleKeys.autofill.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: Switch(
+                value: false,
+                onChanged: (value) {
+                  value = value;
+                },
+              ),
             ),
-            Selection(
-              text: LocaleKeys.help.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.keyboard_arrow_right_outlined,
-                  size: 30.sp,
-                ),),
-
+          ),
+          Selection(
+            text: LocaleKeys.about.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 30.sp,
+              ),
             ),
-            Selection(
-              text: LocaleKeys.version.tr(),
-              widget: IconButton(
-                onPressed: () {},
-                icon: Text('1.0.0'),),
-
+          ),
+          Selection(
+            text: LocaleKeys.help.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.keyboard_arrow_right_outlined,
+                size: 30.sp,
+              ),
             ),
-      ],),
+          ),
+          Selection(
+            text: LocaleKeys.version.tr(),
+            widget: IconButton(
+              onPressed: () {},
+              icon: const Text('1.0.0'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

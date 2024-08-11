@@ -40,7 +40,7 @@
   "about":"About",
   "help": "Help",
   "version": "Version",
-  "editProfile": "Edit profile",
+  "editProfile": "Edit Profile",
   "switchAccount": "Switch account",
   "trustedDevices": "Trusted devices",
   "backup": "Backup",
@@ -75,7 +75,8 @@
   "searchIcon": "SEARCH",
   "analysisIcon":"ANALYSIS",
   "settingIcon": "SETTING",
-  "wrongOtp":"Invalid OTP Code"
+  "wrongOtp":"Invalid OTP Code",
+  "userExists":"The number is already registered"
  
 
 

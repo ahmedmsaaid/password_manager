@@ -47,7 +47,7 @@ class Widgets {
       TextEditingController controller, String labelText,
       {Icon? icon}) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: TextFormField(
         onTapOutside: (event) {
           FocusScope.of(context).unfocus();
