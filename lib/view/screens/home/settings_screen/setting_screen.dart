@@ -65,6 +65,11 @@ class SettingScreen extends StatelessWidget {
                     onChanged: (value) {
                       if (value != null) {
                         HomeCubit.get(context).changeLang(value);
+                        if (value == 'ar') {
+                          context.setLocale(const Locale('ar'));
+                        } else {
+                          context.setLocale(const Locale('en'));
+                        }
                       }
                     },
                     value: HomeCubit.get(context)
