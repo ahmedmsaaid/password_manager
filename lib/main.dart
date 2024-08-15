@@ -9,6 +9,7 @@ import 'package:password_manager/my_app.dart';
 
 late String initialRoute;
 void main() async {
+  
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();

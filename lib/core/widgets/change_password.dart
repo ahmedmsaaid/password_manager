@@ -5,10 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 import 'package:password_manager/view/screens/home/passwords/passwords.dart';
+import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
 class ChangePassword {
   static dialog(context, id) {
+    var cubit = HomeCubit.get(context);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return showDialog(
       context: context,
@@ -16,16 +18,19 @@ class ChangePassword {
         context,
       ) {
         return AlertDialog(
+          backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
           title: Center(
             child: Text(
-              'New Password',
+              LocaleKeys.newPassword.tr(),
+              style: TextStyle(
+                  color: cubit.darkMood ? Colors.white : Colors.black),
             ),
           ),
           content: BlocBuilder<DataCubit, DataState>(
             builder: (context, state) {
               return Form(
                 key: formKey,
-                child: Container(
+                child: SizedBox(
                   height: 100.h,
                   child: Column(
                     mainAxisSize: MainAxisSize.min, // الاستخدام المناسب للمساحة
@@ -39,8 +44,13 @@ class ChangePassword {
                             return null;
                           }
                         },
+                        style: TextStyle(
+                          color: HomeCubit.get(context).darkMood
+                              ? Colors.white
+                              : Colors.black, // تغيير لون النص هنا
+                        ),
                         decoration: InputDecoration(
-                          border: UnderlineInputBorder(),
+                          border: const UnderlineInputBorder(),
                           labelText: LocaleKeys.password.tr(),
                           suffixIcon: BlocBuilder<DataCubit, DataState>(
                             builder: (context, state) {
@@ -48,11 +58,11 @@ class ChangePassword {
                                       DataCubit.get(context)
                                           .passwordController
                                           .text)
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.check_circle_outline,
                                       color: Colors.green,
                                     )
-                                  : Icon(Icons.check_circle_outline);
+                                  : const Icon(Icons.check_circle_outline);
                             },
                           ),
                         ),
@@ -77,10 +87,10 @@ class ChangePassword {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   DataCubit.get(context).changePassword(id);
-                  Navigation.push(context, Passwords());
+                  Navigation.push(context, const Passwords());
                 }
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
           ],
         );

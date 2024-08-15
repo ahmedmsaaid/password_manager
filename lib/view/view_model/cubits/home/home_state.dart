@@ -8,3 +8,4 @@ final class HomeInitial extends HomeState {}
 final class PageChanged extends HomeState {}
 
 final class DrobDown extends HomeState {}
+final class DarkMoodOn extends HomeState {}

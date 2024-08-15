@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
-import 'package:password_manager/view/screens/home/analysis/anali.dart';
-import 'package:password_manager/view/screens/home/analysis/analysis.dart';
+import 'package:password_manager/view/screens/home/analysis/analysis_screen.dart';
 import 'package:password_manager/view/screens/home/passwords/passwords.dart';
 import 'package:password_manager/view/screens/home/search/search.dart';
 import 'package:password_manager/view/screens/home/settings_screen/setting_screen.dart';
@@ -15,8 +14,7 @@ class HomeScreen extends StatefulWidget {
 
   static List<Widget> screens = [
     const Passwords(),
-    // Analysis(),
-    const MyCustomScrollView(),
+    const Analysis(),
     const Search(),
     const SettingScreen(),
   ];
@@ -32,9 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, state) {
         var cubit = HomeCubit.get(context);
         return Scaffold(
+          backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
           body: HomeScreen.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
-            selectedItemColor: Colors.black,
+            selectedItemColor: cubit.darkMood ? Colors.black : Colors.white,
             onTap: (index) {
               cubit.navBar(index);
             },
@@ -43,33 +42,37 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                 icon: Image.asset('assets/icons/home.png'),
                 label: LocaleKeys.homeIcon.tr(),
+                backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
                 activeIcon: Image.asset(
                   'assets/icons/home.png',
-                  color: Colors.black,
+                  color: cubit.darkMood ? Colors.white : Colors.black,
                 ),
               ),
               BottomNavigationBarItem(
+                backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
                 icon: Image.asset('assets/icons/analysis.png'),
                 label: LocaleKeys.analysisIcon.tr(),
                 activeIcon: Image.asset(
                   'assets/icons/analysis.png',
-                  color: Colors.black,
+                  color: cubit.darkMood ? Colors.white : Colors.black,
                 ),
               ),
               BottomNavigationBarItem(
+                backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
                 icon: Image.asset('assets/icons/search.png'),
                 label: LocaleKeys.searchIcon.tr(),
                 activeIcon: Image.asset(
                   'assets/icons/search.png',
-                  color: Colors.black,
+                  color: cubit.darkMood ? Colors.white : Colors.black,
                 ),
               ),
               BottomNavigationBarItem(
+                backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
                 icon: Image.asset('assets/icons/icons.png'),
                 label: LocaleKeys.settingIcon.tr(),
                 activeIcon: Image.asset(
                   'assets/icons/icons.png',
-                  color: Colors.black,
+                  color: cubit.darkMood ? Colors.white : Colors.black,
                 ),
               ),
             ],

@@ -46,19 +46,13 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       phonAuth(phoneNumber);
     }
-
-    // تحويل البيانات إلى الن
   }
 
   Future<void> addUserToFirestore() async {
     emit(LoadingAddUserToFireStore());
     print('********LoadingAddUserToFireStore************');
     try {
-      await db
-          .collection(FirebaseKeys.users)
-          .doc(mobileController.text) // تأكد من أن هذا هو معرف المستخدم.
-          .set({
-        // يمكنك استخدام .set() إذا كنت ترغب في تحديد معرف الوثيقة.
+      await db.collection(FirebaseKeys.users).doc(mobileController.text).set({
         FirebaseKeys.fristName: firstNameController.text,
         FirebaseKeys.lastName: lastNameController.text,
         FirebaseKeys.mobileNumber: mobileController.text,
@@ -95,7 +89,7 @@ class AuthCubit extends Cubit<AuthState> {
         await SharedHelper.saveData(FirebaseKeys.lastName, userData.lastName);
         await SharedHelper.saveData(
             FirebaseKeys.mobileNumber, userData.mobileNumber);
-        // معالجة البيانات
+    
       } else {
         print('Document does not exist!');
       }

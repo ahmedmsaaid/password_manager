@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:password_manager/core/widgets/navigator.dart';
-import 'package:password_manager/view/screens/home/home/home_screen.dart';
+import 'package:password_manager/core/routing/routes.dart';
 
 import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 
@@ -25,7 +24,8 @@ class VerificationScreen extends StatelessWidget {
         },
         listener: (context, state) {
           if (state is Success) {
-            Navigation.push(context, const HomeScreen());
+            Navigator.pushNamed(context, Routs.homeScreen);
+
             if (!cubit.isLogin) {
               cubit.addUserToFirestore();
             }

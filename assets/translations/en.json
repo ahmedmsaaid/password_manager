@@ -80,7 +80,12 @@
   "language":"Language",
   "arabic":"العربيه",
   "engilsh":"English",
-  "darkmode":"Dark mode"
+  "darkmode":"Dark mode",
+  "secured":"Secured",
+  "save":"Save",
+  "clear":"Clear",
+  "newPassword":"Tybe new Password",
+  "addpasswordtoshowdata":"Add a Password Now ,And it Will Appear Here."
  
 
 

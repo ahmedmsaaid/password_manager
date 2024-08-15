@@ -7,17 +7,19 @@ import 'package:password_manager/core/models/generator.dart';
 import 'package:password_manager/core/models/password_model.dart';
 import 'package:password_manager/core/widgets/change_password.dart';
 import 'package:password_manager/core/widgets/widgets.dart';
+import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
 import '../../../../core/widgets/selection.dart';
 import '../../../../translation/locate_keys.g.dart';
 
 class Details extends StatelessWidget {
-  Details({super.key, required this.model});
+  const Details({super.key, required this.model});
   final PasswordModel model;
 
   @override
   Widget build(BuildContext context) {
+    var theme = HomeCubit.get(context);
     var cubit = DataCubit.get(context);
     return BlocListener<DataCubit, DataState>(
       listenWhen: (previous, current) {
@@ -27,31 +29,39 @@ class Details extends StatelessWidget {
         DataCubit();
       },
       child: Scaffold(
+        backgroundColor: theme.darkMood ? Colors.black : Colors.white,
         appBar: AppBar(
+          backgroundColor: theme.darkMood ? Colors.black : Colors.white,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
+              color: theme.darkMood ? Colors.white : Colors.black,
             ),
             color: Colors.black,
           ),
           centerTitle: false,
-          title: Text(LocaleKeys.back.tr()),
+          title: Text(
+            LocaleKeys.back.tr(),
+            style: TextStyle(
+              color: theme.darkMood ? Colors.white : Colors.black,
+            ),
+          ),
           actions: [
             Padding(
               padding: EdgeInsets.all(8.0.sp),
               child: IconButton(
                 onPressed: () {
                   DataCubit.get(context).remove(model.id ?? '');
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       backgroundColor: Colors.green,
                       content: Text('Password Deleted')));
                   Navigator.pop(context);
                   DataCubit.get(context).getDataFireStore();
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete_outline,
                   color: Colors.red,
                 ),
@@ -77,7 +87,10 @@ class Details extends StatelessWidget {
                     children: [
                       Text(
                         model.name ?? '',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: theme.darkMood ? Colors.white : Colors.black,
+                        ),
                       ),
                       Text(
                         model.userId ?? '',
@@ -94,13 +107,13 @@ class Details extends StatelessWidget {
                       onPressed: () {
                         cubit.showDeatelsButton();
                       },
-                      icon: Icon(Icons.keyboard_arrow_up),
+                      icon: const Icon(Icons.keyboard_arrow_up),
                     ),
                     child: IconButton(
                       onPressed: () {
                         cubit.showDeatelsButton();
                       },
-                      icon: Icon(Icons.keyboard_arrow_down),
+                      icon: const Icon(Icons.keyboard_arrow_down),
                     ),
                   ),
                 ),
@@ -121,7 +134,11 @@ class Details extends StatelessWidget {
                           children: [
                             Text(
                               LocaleKeys.link.tr(),
-                              style: TextStyle(fontSize: 16.sp),
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: theme.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                             SizedBox(
                               width: 80.w,
@@ -145,9 +162,13 @@ class Details extends StatelessWidget {
                           children: [
                             Text(
                               LocaleKeys.userId.tr(),
-                              style: TextStyle(fontSize: 16.sp),
+                              style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: theme.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 50,
                             ),
                             Text(
@@ -167,7 +188,11 @@ class Details extends StatelessWidget {
                           children: [
                             Text(
                               LocaleKeys.password.tr(),
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: theme.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                             SizedBox(
                               width: 50.w,
@@ -186,7 +211,11 @@ class Details extends StatelessWidget {
                           children: [
                             Text(
                               LocaleKeys.autofill.tr(),
-                              style: TextStyle(fontSize: 18.sp),
+                              style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: theme.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                             SizedBox(
                               width: 50.w,
@@ -217,12 +246,12 @@ class Details extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                   side: BorderSide(
                                       color: Colors.black.withOpacity(.2))),
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.blueGrey,
                             ),
                             onPressed: () {
                               Widgets.copy(model.password!, context);
                               ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
+                                  .showSnackBar(const SnackBar(
                                 content: Text('Coped'),
                                 backgroundColor: Colors.green,
                               ));
@@ -241,7 +270,7 @@ class Details extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.sp),
                                   side: BorderSide(
                                       color: Colors.black.withOpacity(.2))),
-                              backgroundColor: Colors.white,
+                              backgroundColor: Colors.blueGrey,
                             ),
                             onPressed: () {
                               ChangePassword.dialog(context, model.id);

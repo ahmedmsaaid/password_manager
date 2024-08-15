@@ -10,11 +10,18 @@ class HomeCubit extends Cubit<HomeState> {
 
   static HomeCubit get(context) => BlocProvider.of<HomeCubit>(context);
   int currentIndex = 0;
+  bool darkMood = false;
 
-  String dropdownValue = 'ar';
+  String dropdownValue = 'en';
   Future<void> navBar(index) async {
     currentIndex = index;
     emit(PageChanged());
+  }
+
+  void darkMoode() {
+    darkMood = !darkMood;
+
+    emit(DarkMoodOn());
   }
 
   void changeLang(String selectedValue) {

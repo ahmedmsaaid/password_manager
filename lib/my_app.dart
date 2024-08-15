@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => HomeCubit()),
           ],
           child: MaterialApp(
+            darkTheme: ThemeData.dark(),
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      child: SplashScreen(),
+      child: const SplashScreen(),
     );
   }
 }

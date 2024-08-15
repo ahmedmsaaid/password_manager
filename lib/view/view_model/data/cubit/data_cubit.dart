@@ -9,8 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:password_manager/cache/local/cache_helper.dart';
 import 'package:password_manager/core/firebase/firebase.dart';
 import 'package:password_manager/core/models/password_model.dart';
-import 'package:password_manager/core/models/profile_model.dart';
-import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 import 'package:random_password_generator/random_password_generator.dart';
 
 part 'data_state.dart';
@@ -38,6 +36,7 @@ class DataCubit extends Cubit<DataState> {
   double analysis = 0.58;
   bool showDeatels = false;
   bool trueMark = false;
+  bool shimmer = false;
 
   String newPassword = '';
   bool letters = true;
@@ -46,6 +45,16 @@ class DataCubit extends Cubit<DataState> {
   bool specialChar = true;
   double passwordLength = 8.0;
   //Analysis Screen
+  void shimmerOn() {
+    shimmer = true;
+    emit(ShimmerOn());
+    print(shimmer);
+    Future.delayed(const Duration(seconds: 2)).then((_) {
+      shimmer = false;
+      emit(ShimmerOf());
+    });
+  }
+
   void chickAnalysis() {
     resk = 0;
     wake = 0;
@@ -93,14 +102,12 @@ class DataCubit extends Cubit<DataState> {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     photo = image;
     if (photo != null) {
-      // استخدم الصورة التي تم اختيارها
       print('**********************Selected image path: ${photo!.path}');
     } else {
       print('**************No image selected.');
     }
   }
 
-  // إضافة صورة إلى Firebase Storage
   Future<void> addImageTOfireStorage() async {
     try {
       Reference refrenceRoot = FirebaseStorage.instance.ref();
@@ -108,7 +115,6 @@ class DataCubit extends Cubit<DataState> {
       Reference referenceToUbload = refrenceDirToimages
           .child(SharedHelper.getData(FirebaseKeys.mobileNumber));
 
-      // التأكد من وجود صورة
       if (photo != null) {
         await referenceToUbload.putFile(File(photo!.path));
         imageUrl = await referenceToUbload.getDownloadURL();
@@ -128,10 +134,8 @@ class DataCubit extends Cubit<DataState> {
     try {
       await db
           .collection(FirebaseKeys.users)
-          .doc(SharedHelper.getData(
-              FirebaseKeys.mobileNumber)) // تأكد من أن هذا هو معرف المستخدم.
+          .doc(SharedHelper.getData(FirebaseKeys.mobileNumber))
           .set({
-        // يمكنك استخدام .set() إذا كنت ترغب في تحديد معرف الوثيقة.
         FirebaseKeys.fristName: fristName.text,
         FirebaseKeys.lastName: lastName.text,
         FirebaseKeys.image: imageUrl

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 import '../../../translation/locate_keys.g.dart';
 
@@ -14,17 +15,28 @@ class NewRecord extends StatelessWidget {
 
     var cubit = DataCubit.get(context);
     return BlocBuilder<DataCubit, DataState>(builder: (context, state) {
+      var model = HomeCubit.get(context);
+
       return Scaffold(
+        backgroundColor: model.darkMood ? Colors.black : Colors.white,
         appBar: AppBar(
+          backgroundColor: model.darkMood ? Colors.black : Colors.white,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back),
+            icon: Icon(
+              Icons.arrow_back,
+              color: model.darkMood ? Colors.white : Colors.black,
+            ),
             color: Colors.black,
           ),
           centerTitle: true,
-          title: Text(LocaleKeys.newRecord.tr()),
+          title: Text(
+            LocaleKeys.newRecord.tr(),
+            style:
+                TextStyle(color: model.darkMood ? Colors.white : Colors.black),
+          ),
         ),
         body: Form(
           key: formKey,
@@ -38,7 +50,9 @@ class NewRecord extends StatelessWidget {
                   ),
                   Text(
                     LocaleKeys.name.tr(),
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: model.darkMood ? Colors.white : Colors.black),
                   ),
                   SizedBox(
                     width: 30.w,
@@ -52,19 +66,24 @@ class NewRecord extends StatelessWidget {
                           return null;
                         }
                       },
+                      style: TextStyle(
+                        color: HomeCubit.get(context).darkMood
+                            ? Colors.white
+                            : Colors.black, // تغيير لون النص هنا
+                      ),
                       controller: DataCubit.get(context).websiteNameController,
                       decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
+                        border: const UnderlineInputBorder(),
                         labelText: LocaleKeys.nameFailed.tr(),
                         suffixIcon: BlocBuilder<DataCubit, DataState>(
                           builder: (context, state) {
                             return cubit.trueMarkButton(
                                     cubit.websiteNameController.text)
-                                ? Icon(
+                                ? const Icon(
                                     Icons.check_circle_outline,
                                     color: Colors.green,
                                   )
-                                : Icon(Icons.check_circle_outline);
+                                : const Icon(Icons.check_circle_outline);
                           },
                         ),
                       ),
@@ -83,7 +102,9 @@ class NewRecord extends StatelessWidget {
                   ),
                   Text(
                     LocaleKeys.userId.tr(),
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: model.darkMood ? Colors.white : Colors.black),
                   ),
                   SizedBox(
                     width: 30.w,
@@ -97,19 +118,24 @@ class NewRecord extends StatelessWidget {
                           return null;
                         }
                       },
+                      style: TextStyle(
+                        color: HomeCubit.get(context).darkMood
+                            ? Colors.white
+                            : Colors.black, // تغيير لون النص هنا
+                      ),
                       controller: cubit.userIdController,
                       decoration: InputDecoration(
-                        border: UnderlineInputBorder(),
+                        border: const UnderlineInputBorder(),
                         labelText: LocaleKeys.userIdFailed.tr(),
                         suffixIcon: BlocBuilder<DataCubit, DataState>(
                           builder: (context, state) {
                             return cubit
                                     .trueMarkButton(cubit.userIdController.text)
-                                ? Icon(
+                                ? const Icon(
                                     Icons.check_circle_outline,
                                     color: Colors.green,
                                   )
-                                : Icon(Icons.check_circle_outline);
+                                : const Icon(Icons.check_circle_outline);
                           },
                         ),
                       ),
@@ -135,14 +161,16 @@ class NewRecord extends StatelessWidget {
               Text(
                 LocaleKeys.password.tr(),
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20.sp),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: model.darkMood ? Colors.white : Colors.black),
               ),
               SizedBox(
                 height: 15.h,
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   Expanded(
@@ -154,9 +182,14 @@ class NewRecord extends StatelessWidget {
                           return null;
                         }
                       },
+                      style: TextStyle(
+                        color: HomeCubit.get(context).darkMood
+                            ? Colors.white
+                            : Colors.black, // تغيير لون النص هنا
+                      ),
                       controller: cubit.passwordController,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         labelText: LocaleKeys.password.tr(),
                         suffixIcon: IconButton(
                             onPressed: () {
@@ -167,18 +200,18 @@ class NewRecord extends StatelessWidget {
                                   specialChar: cubit.specialChar,
                                   uppercase: cubit.uppercase);
                             },
-                            icon: Icon(Icons.refresh)),
+                            icon: const Icon(Icons.refresh)),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                 ],
               ),
               Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                   BlocBuilder<DataCubit, DataState>(
@@ -192,7 +225,7 @@ class NewRecord extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 25,
                   ),
                 ],
@@ -208,14 +241,18 @@ class NewRecord extends StatelessWidget {
                             children: [
                               Text(
                                 LocaleKeys.length.tr(),
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: model.darkMood
+                                        ? Colors.white
+                                        : Colors.black),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 25,
                               ),
                               Text(
                                 '${cubit.passwordLength.round()}',
-                                style: TextStyle(fontSize: 18),
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
@@ -240,9 +277,13 @@ class NewRecord extends StatelessWidget {
                               children: [
                                 Text(
                                   LocaleKeys.numbers.tr(),
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: model.darkMood
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 25,
                                 ),
                                 Checkbox(
@@ -257,9 +298,13 @@ class NewRecord extends StatelessWidget {
                               children: [
                                 Text(
                                   LocaleKeys.symbols.tr(),
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: model.darkMood
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 25,
                                 ),
                                 Checkbox(
@@ -278,10 +323,14 @@ class NewRecord extends StatelessWidget {
                               children: [
                                 Text(
                                   LocaleKeys.lowercase.tr(),
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: model.darkMood
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
-                                SizedBox(
-                                  width: 10,
+                                const SizedBox(
+                                  width: 45,
                                 ),
                                 Checkbox(
                                     value: true,
@@ -293,9 +342,13 @@ class NewRecord extends StatelessWidget {
                               children: [
                                 Text(
                                   LocaleKeys.uppercase.tr(),
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: model.darkMood
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 12,
                                 ),
                                 Checkbox(
@@ -309,7 +362,7 @@ class NewRecord extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
                         Row(
@@ -322,26 +375,30 @@ class NewRecord extends StatelessWidget {
                                           BorderRadius.circular(10.sp),
                                       side: BorderSide(
                                           color: Colors.black.withOpacity(.2))),
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: Colors.blueGrey,
                                 ),
                                 onPressed: () {
-                                  cubit.genetarePassword(
-                                      letters: cubit.letters,
-                                      numbers: cubit.numbers,
-                                      passwordLength: cubit.passwordLength,
-                                      specialChar: cubit.specialChar,
-                                      uppercase: cubit.uppercase);
+                                  cubit.passwordController.clear();
+                                  cubit.websiteNameController.clear();
+                                  cubit.userIdController.clear();
+
+                                  // cubit.genetarePassword(
+                                  //     letters: cubit.letters,
+                                  //     numbers: cubit.numbers,
+                                  //     passwordLength: cubit.passwordLength,
+                                  //     specialChar: cubit.specialChar,
+                                  //     uppercase: cubit.uppercase);
                                 },
                                 child: Text(
-                                  LocaleKeys.regenerate.tr(),
+                                  LocaleKeys.clear.tr(),
                                   style: TextStyle(
                                       color: Colors.black87,
-                                      fontSize: 12.sp,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.normal),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Expanded(
@@ -352,7 +409,7 @@ class NewRecord extends StatelessWidget {
                                           BorderRadius.circular(10.sp),
                                       side: BorderSide(
                                           color: Colors.black.withOpacity(.2))),
-                                  backgroundColor: Colors.white,
+                                  backgroundColor: Colors.blueGrey,
                                 ),
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
@@ -361,7 +418,7 @@ class NewRecord extends StatelessWidget {
                                     DataCubit.get(context).chickAnalysis();
 
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content: Text('Done Add Password'),
                                         backgroundColor: Colors.green,
                                       ),
@@ -380,33 +437,8 @@ class NewRecord extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
-                        ),
-                        Text(
-                          LocaleKeys.or.tr(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18.sp),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.sp),
-                                side: BorderSide(
-                                    color: Colors.black.withOpacity(.2))),
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () {},
-                          child: Text(
-                            LocaleKeys.addManually.tr(),
-                            style: TextStyle(
-                                color: Colors.black87,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.normal),
-                          ),
                         ),
                       ],
                     ),

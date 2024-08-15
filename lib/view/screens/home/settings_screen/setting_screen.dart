@@ -15,141 +15,194 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigation.push(context, const ProfileScreen());
-            },
-            icon: const Icon(
-              Icons.person_outline,
-              color: Colors.black,
-            )),
-        centerTitle: true,
-        title: Text(LocaleKeys.setting.tr()),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-              onPressed: () {
-                Navigation.push(context, const NewRecord());
-              },
-              icon: const Icon(Icons.add),
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        var cubit = HomeCubit.get(context);
+        return Scaffold(
+          backgroundColor:
+              HomeCubit.get(context).darkMood ? Colors.black : Colors.white,
+          appBar: AppBar(
+            backgroundColor:
+                HomeCubit.get(context).darkMood ? Colors.black : Colors.white,
+            leading: IconButton(
+                onPressed: () {
+                  Navigation.push(context, const ProfileScreen());
+                },
+                icon: Icon(
+                  Icons.person_outline,
+                  color: cubit.darkMood ? Colors.white : Colors.black,
+                )),
+            centerTitle: true,
+            title: Text(
+              LocaleKeys.setting.tr(),
+              style: TextStyle(
+                color: cubit.darkMood ? Colors.white : Colors.black,
+              ),
             ),
-          ),
-        ],
-      ),
-      body: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          var cubit = HomeCubit.get(context);
-          return ListView(
-            children: [
-              Selection(
-                text: LocaleKeys.profile.tr(),
-                widget: IconButton(
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IconButton(
                   onPressed: () {
-                    Navigation.push(context, const ProfileScreen());
+                    Navigation.push(context, const NewRecord());
                   },
                   icon: Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 30.sp,
+                    Icons.add,
+                    color: cubit.darkMood ? Colors.white : Colors.black,
                   ),
-                ),
-              ),
-              BlocProvider.value(
-                value: HomeCubit.get(context),
-                child: Selection(
-                  text: LocaleKeys.language.tr(),
-                  widget: DropdownButton<String>(
-                    borderRadius: BorderRadius.circular(12),
-                    onChanged: (value) {
-                      if (value != null) {
-                        HomeCubit.get(context).changeLang(value);
-                        if (value == 'ar') {
-                          context.setLocale(const Locale('ar'));
-                        } else {
-                          context.setLocale(const Locale('en'));
-                        }
-                      }
-                    },
-                    value: HomeCubit.get(context)
-                        .dropdownValue, // تحديد القيمة الحالية هنا
-                    items: [
-                      DropdownMenuItem<String>(
-                        value: "ar",
-                        child: Text(LocaleKeys.arabic.tr()),
-                      ),
-                      DropdownMenuItem<String>(
-                        value: "en",
-                        child: Text(LocaleKeys.engilsh.tr()), // تصحيح اسم اللغة
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Selection(
-                text: LocaleKeys.sync.tr(),
-                widget: IconButton(
-                  onPressed: () {},
-                  icon: Switch(
-                    value: true,
-                    activeColor: Colors.white,
-                    activeTrackColor: Colors.black,
-                    inactiveThumbColor: Colors.black,
-                    inactiveTrackColor: Colors.white,
-                    onChanged: (value) {
-                      value = value;
-                    },
-                  ),
-                ),
-              ),
-              Selection(
-                text: LocaleKeys.darkmode.tr(),
-                widget: IconButton(
-                  onPressed: () {},
-                  icon: Switch(
-                    activeColor: Colors.white,
-                    activeTrackColor: Colors.black,
-                    inactiveThumbColor: Colors.black,
-                    inactiveTrackColor: Colors.white,
-                    value: false,
-                    onChanged: (value) {
-                      value = value;
-                    },
-                  ),
-                ),
-              ),
-              Selection(
-                text: LocaleKeys.about.tr(),
-                widget: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.keyboard_arrow_right_outlined,
-                    size: 30.sp,
-                  ),
-                ),
-              ),
-              // Selection(
-              //   text: LocaleKeys.help.tr(),
-              //   widget: IconButton(
-              //     onPressed: () {},
-              //     icon: Icon(
-              //       Icons.keyboard_arrow_right_outlined,
-              //       size: 30.sp,
-              //     ),
-              //   ),
-              // ),
-              Selection(
-                text: LocaleKeys.version.tr(),
-                widget: IconButton(
-                  onPressed: () {},
-                  icon: const Text('1.0.0'),
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+          body: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              var cubit = HomeCubit.get(context);
+              return ListView(
+                children: [
+                  Selection(
+                    text: LocaleKeys.profile.tr(),
+                    widget: IconButton(
+                      onPressed: () {
+                        Navigation.push(context, const ProfileScreen());
+                      },
+                      icon: Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        size: 30.sp,
+                        color: cubit.darkMood ? Colors.grey : Colors.black,
+                      ),
+                    ),
+                  ),
+                  BlocProvider.value(
+                    value: HomeCubit.get(context),
+                    child: Selection(
+                      text: LocaleKeys.language.tr(),
+                      widget: DropdownButton<String>(
+                        dropdownColor:
+                            cubit.darkMood ? Colors.black : Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+
+                        onChanged: (value) {
+                          if (value != null) {
+                            HomeCubit.get(context).changeLang(value);
+                            if (value == 'ar') {
+                              context.setLocale(const Locale('ar'));
+                            } else {
+                              context.setLocale(const Locale('en'));
+                            }
+                          }
+                        },
+                        value: HomeCubit.get(context)
+                            .dropdownValue, // تحديد القيمة الحالية هنا
+
+                        style: TextStyle(
+                          color: cubit.darkMood ? Colors.white : Colors.black,
+                        ),
+                        items: [
+                          DropdownMenuItem<String>(
+                            value: "ar",
+                            child: Text(
+                              LocaleKeys.arabic.tr(),
+                              style: TextStyle(
+                                color: cubit.darkMood
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ),
+                          DropdownMenuItem<String>(
+                            value: "en",
+                            child: Text(
+                              LocaleKeys.engilsh.tr(),
+                              style: TextStyle(
+                                color: cubit.darkMood
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ), // تصحيح اسم اللغة
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Selection(
+                    text: LocaleKeys.sync.tr(),
+                    widget: IconButton(
+                      onPressed: () {},
+                      icon: Switch(
+                        value: true,
+                        activeColor:
+                            cubit.darkMood ? Colors.black : Colors.white,
+                        activeTrackColor:
+                            cubit.darkMood ? Colors.white : Colors.black,
+                        inactiveThumbColor:
+                            cubit.darkMood ? Colors.white : Colors.black,
+                        inactiveTrackColor:
+                            cubit.darkMood ? Colors.black : Colors.white,
+                        onChanged: (value) {
+                          value = value;
+                        },
+                      ),
+                    ),
+                  ),
+                  BlocProvider.value(
+                    value: HomeCubit.get(context),
+                    child: Selection(
+                      text: LocaleKeys.darkmode.tr(),
+                      widget: Switch(
+                        activeColor:
+                            cubit.darkMood ? Colors.black : Colors.white,
+                        activeTrackColor:
+                            cubit.darkMood ? Colors.white : Colors.black,
+                        inactiveThumbColor:
+                            cubit.darkMood ? Colors.white : Colors.black,
+                        inactiveTrackColor:
+                            cubit.darkMood ? Colors.black : Colors.white,
+                        value: HomeCubit.get(context).darkMood,
+                        onChanged: (value) {
+                          HomeCubit.get(context).darkMoode();
+                        },
+                      ),
+                    ),
+                  ),
+                  Selection(
+                    text: LocaleKeys.about.tr(),
+                    widget: IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.keyboard_arrow_right_outlined,
+                        color: cubit.darkMood ? Colors.grey : Colors.black,
+                        size: 30.sp,
+                      ),
+                    ),
+                  ),
+                  // Selection(
+                  //   text: LocaleKeys.help.tr(),
+                  //   widget: IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(
+                  //       Icons.keyboard_arrow_right_outlined,
+                  //       size: 30.sp,
+                  //     ),
+                  //   ),
+                  // ),
+                  Selection(
+                    text: LocaleKeys.version.tr(),
+                    widget: IconButton(
+                      onPressed: () {},
+                      icon: Text(
+                        '1.0.0',
+                        style: TextStyle(
+                          color: cubit.darkMood ? Colors.white : Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

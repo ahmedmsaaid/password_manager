@@ -83,5 +83,10 @@ abstract class  LocaleKeys {
   static const arabic = 'arabic';
   static const engilsh = 'engilsh';
   static const darkmode = 'darkmode';
+  static const secured = 'secured';
+  static const save = 'save';
+  static const clear = 'clear';
+  static const newPassword = 'newPassword';
+  static const addpasswordtoshowdata = 'addpasswordtoshowdata';
 
 }

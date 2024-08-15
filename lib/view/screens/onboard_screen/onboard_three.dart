@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:password_manager/core/routing/routes.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
 
 import '../../../core/widgets/navigator.dart';
@@ -40,7 +41,7 @@ class OnboardThree extends StatelessWidget {
                 SizedBox(
                   height: 173.h,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ],
@@ -57,8 +58,13 @@ class OnboardThree extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             AuthCubit.get(context).isLogin = false;
-                            Navigation.push(context, LoginRegister());
+                            Navigation.push(context, const LoginRegister());
                           },
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadiusDirectional.circular(12)),
+                              backgroundColor: Colors.black),
                           child: Text(
                             LocaleKeys.register.tr(),
                             style: TextStyle(
@@ -66,15 +72,10 @@ class OnboardThree extends StatelessWidget {
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.normal),
                           ),
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadiusDirectional.circular(12)),
-                              backgroundColor: Colors.black),
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     SizedBox(
@@ -83,19 +84,19 @@ class OnboardThree extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           AuthCubit.get(context).isLogin = true;
-                          Navigation.push(context, LoginRegister());
+                          Navigator.pushNamed(context, Routs.loginRegister);
                         },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadiusDirectional.circular(12.r)),
+                            side: const BorderSide(color: Colors.black),
+                            backgroundColor: Colors.white),
                         child: Text(
                           LocaleKeys.alreadyHaveAnAccount.tr(),
                           style:
                               TextStyle(color: Colors.black, fontSize: 15.sp),
                         ),
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadiusDirectional.circular(12.r)),
-                            side: BorderSide(color: Colors.black),
-                            backgroundColor: Colors.white),
                       ),
                     ),
                   ],

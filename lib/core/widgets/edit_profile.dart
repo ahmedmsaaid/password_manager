@@ -2,18 +2,27 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
+import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
 class EdirProfile {
   static edit(context) {
+    var cubit = HomeCubit.get(context);
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+                color: cubit.darkMood ? Colors.grey : Colors.black, width: 2.0),
+          ),
+          backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
           content: SizedBox(
             height: 350.h,
             child: BlocBuilder<DataCubit, DataState>(
@@ -72,6 +81,11 @@ class EdirProfile {
                             return null;
                           }
                         },
+                        style: TextStyle(
+                          color: HomeCubit.get(context).darkMood
+                              ? Colors.white
+                              : Colors.black, // تغيير لون النص هنا
+                        ),
                         decoration: InputDecoration(
                             border: const UnderlineInputBorder(),
                             labelText: LocaleKeys.firstName.tr(),
@@ -96,8 +110,14 @@ class EdirProfile {
                             return null;
                           }
                         },
+                        style: TextStyle(
+                          color: HomeCubit.get(context).darkMood
+                              ? Colors.white
+                              : Colors.black, // تغيير لون النص هنا
+                        ),
                         decoration: InputDecoration(
-                            border: const UnderlineInputBorder(),
+                            border: const UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black)),
                             labelText: LocaleKeys.lastName.tr(),
                             suffixIcon: BlocBuilder<DataCubit, DataState>(
                               builder: (context, state) {
@@ -111,14 +131,27 @@ class EdirProfile {
                             )),
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            cubit.addImageTOfireStorage();
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: const Text('Save'),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: HomeCubit.get(context).darkMood
+                                ? Colors.grey
+                                : Colors.black,
+                          ),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              cubit.addImageTOfireStorage();
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(LocaleKeys.save.tr(),
+                              style: TextStyle(
+                                color: HomeCubit.get(context).darkMood
+                                    ? Colors.black
+                                    : Colors.white,
+                              )),
+                        ),
                       ),
                     ],
                   ),

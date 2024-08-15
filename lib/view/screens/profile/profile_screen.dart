@@ -10,6 +10,7 @@ import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
 
 import '../../../../translation/locate_keys.g.dart';
 
+import '../../view_model/cubits/home/home_cubit.dart';
 import '../add/new_record.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -19,23 +20,29 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
+        var cubit = HomeCubit.get(context);
         return Scaffold(
+          backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
             leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Row(
+                icon: Row(
                   children: [
                     Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: cubit.darkMood ? Colors.white : Colors.black,
                     ),
                   ],
                 )),
             centerTitle: true,
-            title: Text(LocaleKeys.profile.tr()),
+            title: Text(
+              LocaleKeys.profile.tr(),
+              style: TextStyle(
+                  color: cubit.darkMood ? Colors.white : Colors.black),
+            ),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -43,7 +50,10 @@ class ProfileScreen extends StatelessWidget {
                   onPressed: () {
                     Navigation.push(context, const NewRecord());
                   },
-                  icon: const Icon(Icons.add),
+                  icon: Icon(
+                    Icons.add,
+                    color: cubit.darkMood ? Colors.white : Colors.black,
+                  ),
                 ),
               ),
             ],
@@ -51,29 +61,40 @@ class ProfileScreen extends StatelessWidget {
           body: ListView(
             children: [
               CircleAvatar(
-                  radius: 50,
-                  child: SharedHelper.getData(FirebaseKeys.image) != null
-                      ? ClipOval(
-                          child: Image.network(
-                            SharedHelper.getData(FirebaseKeys.image),
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                            cacheHeight: 300,
-                          ),
-                        )
-                      : SharedHelper.getData(FirebaseKeys.image)),
+                backgroundColor: Colors.grey,
+                radius: 56,
+                child: CircleAvatar(
+                  backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
+                  radius: 53,
+                  child: CircleAvatar(
+                      radius: 50,
+                      child: SharedHelper.getData(FirebaseKeys.image) != null
+                          ? ClipOval(
+                              child: Image.network(
+                                SharedHelper.getData(FirebaseKeys.image),
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                                cacheHeight: 300,
+                              ),
+                            )
+                          : SharedHelper.getData(FirebaseKeys.image)),
+                ),
+              ),
               Container(
                 margin: const EdgeInsets.all(50),
                 width: 300,
-                height: 300,
+                height: 320,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
+                    color: cubit.darkMood ? Colors.black : Colors.white,
+                    border: Border.all(
+                        width: 2,
+                        color: cubit.darkMood ? Colors.grey : Colors.black),
                     borderRadius: BorderRadius.circular(25)),
                 child: ListView(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -81,15 +102,25 @@ class ProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 3),
                             child: Text(
                               LocaleKeys.firstName.tr(),
-                              style: const TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: cubit.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                           ),
                           Container(
                             width: 300,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black),
+                                color: cubit.darkMood
+                                    ? Colors.black
+                                    : Colors.white,
+                                border: Border.all(
+                                    width: 1,
+                                    color: cubit.darkMood
+                                        ? Colors.grey
+                                        : Colors.black),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Text(
                                 style: TextStyle(
@@ -108,19 +139,28 @@ class ProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 3),
                             child: Text(
                               LocaleKeys.lastName.tr(),
-                              style: const TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: cubit.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                           ),
                           Container(
                             width: 300,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black),
+                                color: cubit.darkMood
+                                    ? Colors.black
+                                    : Colors.white,
+                                border: Border.all(
+                                    width: 1,
+                                    color: cubit.darkMood
+                                        ? Colors.grey
+                                        : Colors.black),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Text(
-                                style: TextStyle(
-                                    color: Colors.grey.withOpacity(.8)),
+                                style: const TextStyle(color: Colors.grey),
                                 SharedHelper.getData(FirebaseKeys.lastName)),
                           )
                         ],
@@ -135,15 +175,25 @@ class ProfileScreen extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 3),
                             child: Text(
                               LocaleKeys.mobileNo.tr(),
-                              style: const TextStyle(fontSize: 10),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: cubit.darkMood
+                                      ? Colors.white
+                                      : Colors.black),
                             ),
                           ),
                           Container(
                             width: 300,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.black),
+                                color: cubit.darkMood
+                                    ? Colors.black
+                                    : Colors.white,
+                                border: Border.all(
+                                    width: 1,
+                                    color: cubit.darkMood
+                                        ? Colors.grey
+                                        : Colors.black),
                                 borderRadius: BorderRadius.circular(8)),
                             child: Text(
                                 style: TextStyle(
@@ -160,10 +210,14 @@ class ProfileScreen extends StatelessWidget {
                             EdirProfile.edit(context);
                           },
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black),
+                              backgroundColor:
+                                  cubit.darkMood ? Colors.white : Colors.black),
                           child: Text(
                             LocaleKeys.editProfile.tr(),
-                            style: const TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: cubit.darkMood
+                                    ? Colors.black
+                                    : Colors.white),
                           )),
                     )
                   ],
@@ -174,13 +228,16 @@ class ProfileScreen extends StatelessWidget {
           floatingActionButton: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {},
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      cubit.darkMood ? Colors.white : Colors.black),
               onPressed: () {
                 AuthCubit.get(context).logOut();
                 Navigation.push(context, const SplashScreen());
               },
               child: Text(
                 LocaleKeys.logout.tr(),
-                style: const TextStyle(color: Colors.red),
+                style: const TextStyle(color: Colors.deepOrange),
               ),
             ),
           ),

@@ -5,7 +5,7 @@ import 'package:password_manager/core/routing/routes.dart';
 import 'package:password_manager/view/screens/Login_register/Login_register.dart';
 import 'package:password_manager/view/screens/Login_register/verification_screen.dart';
 import 'package:password_manager/view/screens/add/new_record.dart';
-import 'package:password_manager/view/screens/home/analysis/analysis.dart';
+import 'package:password_manager/view/screens/home/analysis/analysis_screen.dart';
 import 'package:password_manager/view/screens/home/home/home_screen.dart';
 import 'package:password_manager/view/screens/home/passwords/passwords.dart';
 import 'package:password_manager/view/screens/home/settings_screen/setting_screen.dart';
@@ -16,42 +16,52 @@ import 'package:password_manager/view/screens/onboard_screen/onboard_tow.dart';
 import 'package:password_manager/view/screens/profile/profile_screen.dart';
 import 'package:password_manager/view/screens/splash/splash_screen.dart';
 import 'package:password_manager/view/view_model/cubits/auth/auth_cubit.dart';
+import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
+import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
 
 class AppRoutes {
   Route? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routs.homeScreen:
         return MaterialPageRoute(
-          builder: (_) => HomeScreen(),
+          builder: (context) => BlocProvider(
+            create: (context) => DataCubit()
+              ..getDataFireStore()
+              ..chickAnalysis(),
+            child: BlocProvider(
+              create: (context) => HomeCubit(), // تأكد من إضافة HomeCubit هنا
+              child: const HomeScreen(),
+            ),
+          ),
         );
 
       case Routs.loginRegister:
         return MaterialPageRoute(
-          builder: (_) => LoginRegister(),
+          builder: (_) => const LoginRegister(),
         );
       case Routs.newRecord:
         return MaterialPageRoute(
-          builder: (_) => NewRecord(),
+          builder: (_) => const NewRecord(),
         );
       case Routs.onBoardingScreen:
         return MaterialPageRoute(
-          builder: (_) => OnboardScreen(),
+          builder: (_) => const OnboardScreen(),
         );
       case Routs.onBoardOne:
         return MaterialPageRoute(
-          builder: (_) => OnboardOne(),
+          builder: (_) => const OnboardOne(),
         );
       case Routs.onBoardTow:
         return MaterialPageRoute(
-          builder: (_) => OnboardTow(),
+          builder: (_) => const OnboardTow(),
         );
       case Routs.onBoardThree:
         return MaterialPageRoute(
-          builder: (_) => OnboardThree(),
+          builder: (_) => const OnboardThree(),
         );
       case Routs.analysis:
         return MaterialPageRoute(
-          builder: (_) => Analysis(),
+          builder: (_) => const Analysis(),
         );
       // case Routs.details:
       //   return MaterialPageRoute(
@@ -59,26 +69,26 @@ class AppRoutes {
       //   );
       case Routs.passwords:
         return MaterialPageRoute(
-          builder: (_) => Passwords(),
+          builder: (_) => const Passwords(),
         );
       case Routs.profileScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => AuthCubit(ProfileModel())..getUserData,
-            child: ProfileScreen(),
+            create: (context) => DataCubit(),
+            child: const ProfileScreen(),
           ),
         );
       case Routs.settingsScreen:
         return MaterialPageRoute(
-          builder: (_) => SettingScreen(),
+          builder: (_) => const SettingScreen(),
         );
       case Routs.splashScreen:
         return MaterialPageRoute(
-          builder: (_) => SplashScreen(),
+          builder: (_) => const SplashScreen(),
         );
       case Routs.verification:
         return MaterialPageRoute(
-          builder: (_) => VerificationScreen(),
+          builder: (_) => const VerificationScreen(),
         );
       default:
         return null;

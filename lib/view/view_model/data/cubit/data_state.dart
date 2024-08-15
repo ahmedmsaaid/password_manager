@@ -61,6 +61,10 @@ final class LoadingAddUserToFireStore extends DataState {}
 
 final class SuccessAddUserToFireStore extends DataState {}
 
+final class ShimmerOn extends DataState {}
+
+final class ShimmerOf extends DataState {}
+
 final class DeleteError extends DataState {
   final String msg;
 
