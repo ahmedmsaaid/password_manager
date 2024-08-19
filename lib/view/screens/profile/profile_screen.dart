@@ -207,7 +207,7 @@ class ProfileScreen extends StatelessWidget {
                     Center(
                       child: ElevatedButton(
                           onPressed: () {
-                            EdirProfile.edit(context);
+                            EditProfile.edit(context);
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor:

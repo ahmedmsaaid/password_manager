@@ -68,7 +68,8 @@ class Passwords extends StatelessWidget {
                             indent: 50,
                           ),
                       itemCount: cubit.passwords.length,
-                      itemBuilder: (context, index) => cubit.shimmer
+                      itemBuilder: (context, index) => cubit.shimmer ||
+                              state is LoadinGetdData
                           ? Shimmer.fromColors(
                               baseColor: Colors.grey,
                               highlightColor: Colors.white,

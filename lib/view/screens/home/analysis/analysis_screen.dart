@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/analysiys_widget.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/core/widgets/selection.dart';
@@ -15,6 +16,9 @@ class Analysis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     var cubit = DataCubit.get(context);
     var mode = HomeCubit.get(context);
     return Scaffold(
@@ -57,7 +61,7 @@ class Analysis extends StatelessWidget {
             SliverAppBar(
               automaticallyImplyLeading: false,
               backgroundColor: mode.darkMood ? Colors.black : Colors.white,
-              expandedHeight: 400.0,
+              expandedHeight: 350.0.h,
               floating: false,
               flexibleSpace: FlexibleSpaceBar(
                 background: Container(
@@ -66,60 +70,50 @@ class Analysis extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(100.0, 20.0, 100.0, 20),
+                        padding: EdgeInsets.fromLTRB(
+                            screenWidth * 0.10,
+                            screenHeight * 0.005,
+                            screenWidth * 0.10,
+                            screenHeight * 0.005),
                         child: Stack(
+                          alignment: Alignment.center,
                           children: [
-                            SizedBox(
-                              width: 400,
-                              height: 160,
-                              child: CircularProgressIndicator(
-                                value: 1,
-                                strokeWidth: 20.0,
-                                backgroundColor:
-                                    mode.darkMood ? Colors.white : Colors.black,
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                    Colors.black),
+                            CircularProgressIndicator(
+                              value: cubit.passwords.isNotEmpty
+                                  ? cubit.analysisProgress() / 100
+                                  : 0,
+                              strokeWidth: screenWidth * 0.2,
+                              backgroundColor:
+                                  mode.darkMood ? Colors.black : Colors.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                cubit.passwords.isNotEmpty
+                                    ? cubit.linearProgressColor(
+                                        cubit.analysisProgress() / 100)
+                                    : Colors.white,
                               ),
                             ),
-                            SizedBox(
-                              width: 400,
-                              height: 160,
-                              child: CircularProgressIndicator(
-                                value: cubit.passwords.isNotEmpty
-                                    ? cubit.analysisProgress() / 100
-                                    : 0,
-                                strokeWidth: 18.0,
-                                backgroundColor: Colors.white,
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    cubit.passwords.isNotEmpty
-                                        ? cubit.linearProgressColor(
-                                            cubit.analysisProgress() / 100)
-                                        : Colors.white),
-                              ),
+                            CircularProgressIndicator(
+                              value: 1,
+                              strokeWidth: screenWidth * 0.15,
+                              backgroundColor:
+                                  mode.darkMood ? Colors.black : Colors.white,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  mode.darkMood ? Colors.black : Colors.white),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(10, 65, 10, 20),
-                              child: Align(
-                                  alignment: AlignmentDirectional.center,
-                                  child: cubit.passwords.isNotEmpty
-                                      ? Text(
-                                          '${cubit.analysisProgress().round()} %',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: mode.darkMood
-                                                  ? Colors.white
-                                                  : Colors.black),
-                                        )
-                                      : Text(
-                                          '0 %',
-                                          style: TextStyle(
-                                              color: mode.darkMood
-                                                  ? Colors.white
-                                                  : Colors.black),
-                                        )),
-                            )
+                              padding: EdgeInsets.symmetric(
+                                  vertical: screenHeight * 0.1),
+                              child: Text(
+                                '${cubit.passwords.isNotEmpty ? cubit.analysisProgress().round() : 0} %',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: mode.darkMood
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: screenHeight * 0.025,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -130,7 +124,7 @@ class Analysis extends StatelessWidget {
                               ? Text(
                                   '${cubit.analysisProgress().round()}% ${LocaleKeys.secured.tr()}',
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 18.sp,
                                       color: mode.darkMood
                                           ? Colors.white
                                           : Colors.black),
@@ -144,7 +138,7 @@ class Analysis extends StatelessWidget {
                                 )
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -156,7 +150,7 @@ class Analysis extends StatelessWidget {
                               cubit.resk.round(), LocaleKeys.risk.tr(), mode),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       Selection(
                         text: LocaleKeys.analysis.tr(),
                         widget: IconButton(
@@ -195,7 +189,7 @@ class Analysis extends StatelessWidget {
 
   Widget statisticCard(int value, String label, mode) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: EdgeInsets.all(12.sp),
       decoration: BoxDecoration(
         color: mode.darkMood ? Colors.black12 : Colors.white,
         border: Border.all(color: mode.darkMood ? Colors.grey : Colors.black),

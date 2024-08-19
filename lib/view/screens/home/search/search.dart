@@ -27,6 +27,11 @@ class Search extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  autofocus: true,
+                  onTap: () {
+                    SearchWidget.item(cubit.passwords,
+                        password: cubit.search(srechController));
+                  },
                   controller: srechController,
                   style: TextStyle(
                     color: HomeCubit.get(context).darkMood

@@ -4,5 +4,6 @@
     "notebook.defaultFormatter": "Dart-Code.flutter",
     "editor.codeActionsOnSave": {
         "source.fixAll": "explicit"
-}
+},
+"java.configuration.updateBuildConfiguration": "interactive"
 }

@@ -416,6 +416,7 @@ class NewRecord extends StatelessWidget {
                                     DataCubit.get(context).addDataToFirestore();
                                     DataCubit.get(context).getDataFireStore();
                                     DataCubit.get(context).chickAnalysis();
+                                    cubit.clear();
 
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
