@@ -71,7 +71,7 @@ class DataCubit extends Cubit<DataState> {
   }
 
   String search(TextEditingController search) {
-    emit(Seacrhing());
+    // emit(Seacrhing());
     String password;
     password = search.text;
     emit(Seacrhed());

@@ -88,5 +88,6 @@ abstract class  LocaleKeys {
   static const clear = 'clear';
   static const newPassword = 'newPassword';
   static const addpasswordtoshowdata = 'addpasswordtoshowdata';
+  static const aboutApp = 'aboutApp';
 
 }

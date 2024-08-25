@@ -22,51 +22,58 @@ class Search extends StatelessWidget {
         return Scaffold(
           backgroundColor: c.darkMood ? Colors.black : Colors.white,
           body: SafeArea(
-              child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  autofocus: true,
-                  onTap: () {
-                    SearchWidget.item(cubit.passwords,
-                        password: cubit.search(srechController));
-                  },
-                  controller: srechController,
-                  style: TextStyle(
-                    color: HomeCubit.get(context).darkMood
-                        ? Colors.white
-                        : Colors.black, // تغيير لون النص هنا
-                  ),
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r)),
-                    labelText: LocaleKeys.searchHere.tr(),
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search),
+              child: GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).requestFocus(new FocusNode());
+                },
+                child: Column(
+                            children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: TextFormField(
+
+                    // autofocus: true,
+                    onTap: () {
+                      SearchWidget.item(cubit.passwords,
+                          password: cubit.search(srechController));
+                    },
+                    controller: srechController,
+                    style: TextStyle(
+                      color: HomeCubit.get(context).darkMood
+                          ? Colors.white
+                          : Colors.black, // تغيير لون النص هنا
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.r)),
+                      labelText: LocaleKeys.searchHere.tr(),
+                      suffixIcon: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                  child: Visibility(
-                visible: srechController.text.isNotEmpty,
-                replacement: ListView.separated(
-                    separatorBuilder: (context, index) => const Divider(
-                          color: Colors.grey,
-                          thickness: .5,
-                          endIndent: 50,
-                          indent: 50,
-                        ),
-                    itemCount: cubit.passwords.length,
-                    itemBuilder: (context, index) =>
-                        Password(model: cubit.passwords[index])),
-                child: SearchWidget.item(cubit.passwords,
-                    password: cubit.search(srechController)),
-              ))
-            ],
-          )),
+                Expanded(
+                    child: Visibility(
+                  visible: srechController.text.isNotEmpty,
+                  replacement: ListView.separated(
+                      separatorBuilder: (context, index) => const Divider(
+                            color: Colors.grey,
+                            thickness: .5,
+                            endIndent: 50,
+                            indent: 50,
+                          ),
+                      itemCount: cubit.passwords.length,
+                      itemBuilder: (context, index) =>
+                          Password(model: cubit.passwords[index])),
+                  child: SearchWidget.item(cubit.passwords,
+                      password: cubit.search(srechController)),
+                ))
+                            ],
+                          ),
+              )),
         );
       },
     );

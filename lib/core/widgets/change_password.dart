@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:password_manager/core/widgets/navigator.dart';
 import 'package:password_manager/translation/locate_keys.g.dart';
+import 'package:password_manager/view/screens/home/home/home_screen.dart';
 import 'package:password_manager/view/screens/home/passwords/passwords.dart';
 import 'package:password_manager/view/view_model/cubits/home/home_cubit.dart';
 import 'package:password_manager/view/view_model/data/cubit/data_cubit.dart';
@@ -18,6 +19,7 @@ class ChangePassword {
         context,
       ) {
         return AlertDialog(
+
           backgroundColor: cubit.darkMood ? Colors.black : Colors.white,
           title: Center(
             child: Text(
@@ -32,8 +34,10 @@ class ChangePassword {
                 key: formKey,
                 child: SizedBox(
                   height: 100.h,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min, // الاستخدام المناسب للمساحة
+                  child: ListView( padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+
+                    // mainAxisSize: MainAxisSize.min, // الاستخدام المناسب للمساحة
                     children: [
                       TextFormField(
                         controller: DataCubit.get(context).passwordController,
@@ -87,7 +91,7 @@ class ChangePassword {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   DataCubit.get(context).changePassword(id);
-                  Navigation.push(context, const Passwords());
+                  Navigation.pushAndRemoveUntil(context,  HomeScreen());
                 }
               },
               child: const Text('Done'),

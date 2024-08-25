@@ -85,7 +85,8 @@
   "save":"Save",
   "clear":"Clear",
   "newPassword":"Tybe new Password",
-  "addpasswordtoshowdata":"Add a Password Now ,And it Will Appear Here."
+  "addpasswordtoshowdata":"Add a Password Now ,And it Will Appear Here.",
+  "aboutApp": "The application contains many features, such as logging in using the phone number only \nAnd the Firestore database. The user registers, and then a database is created containing the user’s data (name, number, and passwords that will be created). The user can create a password by writing it or have the application create a password for him, and he can choose the length of the password or if it contains Letters, numbers, or even symbols\nAt the bottom, an indicator appears that expresses the strength of the password\nThe application also contains a page that shows all passwords in a way that is easily accessible\nAnd another page to search for the password using the username or website \nAnother page shows all passwords and their strength and shows the working status of all passwords\nAnd some other features"
  
 
 

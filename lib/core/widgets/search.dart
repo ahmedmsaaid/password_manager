@@ -23,6 +23,7 @@ class SearchWidget {
 
     if (filteredModels.isNotEmpty) {
       return ListView.separated(
+
         itemBuilder: (context, index) => Password(
           model: filteredModels[index],
         ),
